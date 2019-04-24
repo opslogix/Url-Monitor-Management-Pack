@@ -3,3 +3,14 @@
 ################################################################################
 
 /OpsLogix.IMP.Url.ConfigurationControl/bin/Debug
+/OpsLogix.IMP.Url.ConfigurationControl/obj
+/OpsLogix.IMP.Url/obj/Debug
+/OpsLogix.IMP.Url/bin/Debug
+/OpsLogix.IMP.Url.Debug/bin/Debug
+/OpsLogix.IMP.Url.Debug/obj
+/OpsLogix.IMP.Url.Debug.UI/obj
+/OpsLogix.IMP.Url.Debug.UI/bin/Debug
+/OpsLogix.IMP.Url.Modules/obj
+/OpsLogix.IMP.Url.Modules/bin/Debug
+/OpsLogix.IMP.Url.Shared/obj
+/OpsLogix.IMP.Url.Shared/bin/Debug
