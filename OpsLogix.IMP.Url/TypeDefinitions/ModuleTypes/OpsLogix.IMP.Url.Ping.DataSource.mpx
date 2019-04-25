@@ -1,0 +1,52 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+      <DataSourceModuleType ID="OpsLogix.IMP.Url.Ping.DataSource" Accessibility="Internal">
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="0" name="BufferSize" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="DontFragment" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="MaxRTT" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="MaxTTL" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="BufferSize" Selector="$Config/BufferSize$" ParameterType="int" />
+          <OverrideableParameter ID="DontFragment" Selector="$Config/DontFragment$" ParameterType="bool" />
+          <OverrideableParameter ID="MaxRTT" Selector="$Config/MaxRTT$" ParameterType="int" />
+          <OverrideableParameter ID="MaxTTL" Selector="$Config/MaxTTL$" ParameterType="int" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="PA_Ping" TypeID="OpsLogix.IMP.Url.Ping.ProbeAction">
+                <URL>$Config/URL$</URL>
+                <BufferSize>$Config/BufferSize$</BufferSize>
+                <DontFragment>$Config/DontFragment$</DontFragment>
+                <MaxRTT>$Config/MaxRTT$</MaxRTT>
+                <MaxTTL>$Config/MaxTTL$</MaxTTL>
+                <DNSServerList>$Config/DNSServerList$</DNSServerList>
+                <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PA_Ping">
+                <Node ID="DS_Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+    </ModuleTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

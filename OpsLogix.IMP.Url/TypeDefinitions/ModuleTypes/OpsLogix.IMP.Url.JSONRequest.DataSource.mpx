@@ -1,0 +1,76 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+      <DataSourceModuleType ID="OpsLogix.IMP.Url.JSONRequest.DataSource" Accessibility="Internal">
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="RequestPath" type="xsd:string" />
+          <xsd:element minOccurs="1" name="Method" type="xsd:string" />
+          <xsd:element minOccurs="0" name="JSONBody" type="xsd:string" />
+          <xsd:element minOccurs="0" name="Headers" type="xsd:string" />
+          <xsd:element minOccurs="1" name="OKFieldName" type="xsd:string" />
+          <xsd:element minOccurs="1" name="OKFieldValue" type="xsd:string" />
+          <xsd:element minOccurs="0" name="ErrorFieldName" type="xsd:string" />
+          <xsd:element minOccurs="0" name="ErrorFieldValue" type="xsd:string" />
+          <xsd:element minOccurs="0" name="AuthenticationScheme" type="xsd:string" />
+          <xsd:element minOccurs="0" name="AuthenticationUserName" type="xsd:string" />
+          <xsd:element minOccurs="0" name="AuthenticationPassword" type="xsd:string" />
+          <xsd:element minOccurs="0" name="UserAgent" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="RequestPath" Selector="$Config/RequestPath$" ParameterType="string" />
+          <OverrideableParameter ID="Method" Selector="$Config/Method$" ParameterType="string" />
+          <OverrideableParameter ID="JSONBody" Selector="$Config/JSONBody$" ParameterType="string" />
+          <OverrideableParameter ID="Headers" Selector="$Config/Headers$" ParameterType="string" />
+          <OverrideableParameter ID="OKFieldName" Selector="$Config/OKFieldName$" ParameterType="string" />
+          <OverrideableParameter ID="OKFieldValue" Selector="$Config/OKFieldValue$" ParameterType="string" />
+          <OverrideableParameter ID="ErrorFieldName" Selector="$Config/ErrorFieldName$" ParameterType="string" />
+          <OverrideableParameter ID="ErrorFieldValue" Selector="$Config/ErrorFieldValue$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationScheme" Selector="$Config/AuthenticationScheme$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationUserName" Selector="$Config/AuthenticationUserName$" ParameterType="string" />
+          <OverrideableParameter ID="UserAgent" Selector="$Config/UserAgent$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="PA_JSONQuery" TypeID="OpsLogix.IMP.Url.JSONRequest.ProbeAction">
+                <URL>$Config/URL$</URL>
+                <RequestPath>$Config/RequestPath$</RequestPath>
+                <Method>$Config/Method$</Method>
+                <JSONBody>$Config/JSONBody$</JSONBody>
+                <Headers>$Config/Headers$</Headers>
+                <OKFieldName>$Config/OKFieldName$</OKFieldName>
+                <OKFieldValue>$Config/OKFieldValue$</OKFieldValue>
+                <ErrorFieldName>$Config/ErrorFieldName$</ErrorFieldName>
+                <ErrorFieldValue>$Config/ErrorFieldValue$</ErrorFieldValue>
+                <AuthenticationScheme>$Config/AuthenticationScheme$</AuthenticationScheme>
+                <AuthenticationUserName>$Config/AuthenticationUserName$</AuthenticationUserName>
+                <AuthenticationPassword>$Config/AuthenticationPassword$</AuthenticationPassword>
+                <UserAgent>$Config/UserAgent$</UserAgent>
+                <DNSServerList>$Config/DNSServerList$</DNSServerList>
+                <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PA_JSONQuery">
+                <Node ID="DS_Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+    </ModuleTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>
+

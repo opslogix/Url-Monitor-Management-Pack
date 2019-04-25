@@ -1,0 +1,65 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="OpsLogix.IMP.Url.DNSNameResolution.Monitor" Accessibility="Public" Enabled="true" Target="OpsLogix.IMP.Url.Address" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="OpsLogix.IMP.Url.DNSNameResolution.UnitMonitor" ConfirmDelivery="false">
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="OpsLogix.IMP.Url.DNSNameResolution.Monitor.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</AlertParameter1>
+            <AlertParameter2>$Target/Property[Type="System!System.Entity"]/DisplayName$</AlertParameter2>
+            <AlertParameter3>$Data/Context/Property[@Name='DNSServers']$</AlertParameter3>
+            <AlertParameter4>$Data/Context/Property[@Name='Error']$</AlertParameter4>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="Resolved" MonitorTypeStateID="Resolved" HealthState="Success" />
+          <OperationalState ID="NotResolved" MonitorTypeStateID="NotResolved" HealthState="Error" />
+          <OperationalState ID="PartiallyResolved" MonitorTypeStateID="PartiallyResolved" HealthState="Warning" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>300</IntervalSeconds>
+          <SyncTime />
+          <URL>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</URL>
+          <DNSServerList>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServers$</DNSServerList>
+          <MinValidResponses>1</MinValidResponses>
+          <DNSRequestTimeoutSec>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServersTimeout$</DNSRequestTimeoutSec>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <StringResources>
+      <StringResource ID="OpsLogix.IMP.Url.DNSNameResolution.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="OpsLogix.IMP.Url.DNSNameResolution.Monitor">
+          <Name>DNS Name Resolution Monitor</Name>
+          <Description>Resolves host name using system-configured DNS servers or custom set of DNS servers.</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.DNSNameResolution.Monitor.AlertMessage">
+          <Name>Unable To Resolve Host Name</Name>
+          <Description>DNS name resolution failed (Critical) or partially failed (Warning) for the host portion of the {0} URL of the '{1}' web resource. The following DNS servers were used during the test: {2}. Detected errors were: {3}.</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.DNSNameResolution.Monitor" SubElementID="Resolved">
+          <Name>Resolved</Name>
+          <Description>Resolved</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.DNSNameResolution.Monitor" SubElementID="NotResolved">
+          <Name>NotResolved</Name>
+          <Description>NotResolved</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.DNSNameResolution.Monitor" SubElementID="PartiallyResolved">
+          <Name>PartiallyResolved</Name>
+          <Description>PartiallyResolved</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+    </LanguagePacks>
+</ManagementPackFragment>

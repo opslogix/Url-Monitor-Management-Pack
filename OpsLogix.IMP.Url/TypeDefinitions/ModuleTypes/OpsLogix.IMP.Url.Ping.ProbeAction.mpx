@@ -1,0 +1,31 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+      <ProbeActionModuleType ID="OpsLogix.IMP.Url.Ping.ProbeAction" Accessibility="Internal">
+        <Configuration>
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="0" name="BufferSize" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="DontFragment" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="MaxRTT" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="MaxTTL" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="BufferSize" Selector="$Config/BufferSize$" ParameterType="int" />
+          <OverrideableParameter ID="DontFragment" Selector="$Config/DontFragment$" ParameterType="bool" />
+          <OverrideableParameter ID="MaxRTT" Selector="$Config/MaxRTT$" ParameterType="int" />
+          <OverrideableParameter ID="MaxTTL" Selector="$Config/MaxTTL$" ParameterType="int" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>OpsLogix.IMP.Url.Modules.DeployableAssembly</Assembly>
+            <Type>OpsLogix.IMP.Url.Modules.PingPA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
+    </ModuleTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

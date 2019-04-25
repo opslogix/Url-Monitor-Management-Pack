@@ -1,0 +1,85 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="OpsLogix.IMP.Url.JSONRequest.05.Monitor" Accessibility="Public" Enabled="false" Target="OpsLogix.IMP.Url.Address" ParentMonitorID="OpsLogix.IMP.Url.JSONRequest.AggregateMonitor" Remotable="true" Priority="Normal" TypeID="OpsLogix.IMP.Url.JSONRequest.UnitMonitor" ConfirmDelivery="false">
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="OpsLogix.IMP.Url.JSONRequest.05.Monitor.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Property[Type="System!System.Entity"]/DisplayName$</AlertParameter1>
+            <AlertParameter2>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</AlertParameter2>
+            <AlertParameter3>$Data/Context/Property[@Name='ErrorKind']$</AlertParameter3>
+            <AlertParameter4>$Data/Context/Property[@Name='Error']$</AlertParameter4>
+            <AlertParameter5>$Data/Context/Property[@Name='Response']$</AlertParameter5>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="OK" MonitorTypeStateID="OK" HealthState="Success" />
+          <OperationalState ID="WarningError" MonitorTypeStateID="WarningError" HealthState="Warning" />
+          <OperationalState ID="CriticalError" MonitorTypeStateID="CriticalError" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>600</IntervalSeconds>
+          <SyncTime />
+          <URL>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</URL>
+          <RequestPath />
+          <Method>GET</Method>
+          <JSONBody />
+          <OKFieldName />
+          <OKFieldValue />
+          <ErrorFieldName />
+          <ErrorFieldValue />
+          <AuthenticationScheme />
+          <AuthenticationUserName>$RunAs[Name="OpsLogix.IMP.Url.RequestCredentials.SecureReference"]/UserName$</AuthenticationUserName>
+          <AuthenticationPassword>$RunAs[Name="OpsLogix.IMP.Url.RequestCredentials.SecureReference"]/Password$</AuthenticationPassword>
+          <UserAgent />
+          <DNSServerList>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServers$</DNSServerList>
+          <DNSRequestTimeoutSec>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServersTimeout$</DNSRequestTimeoutSec>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <StringResources>
+      <StringResource ID="OpsLogix.IMP.Url.JSONRequest.05.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="OpsLogix.IMP.Url.JSONRequest.05.Monitor">
+          <Name>JSON Query Monitor #05</Name>
+          <Description>Complete a REST API call and analyse results.</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.JSONRequest.05.Monitor.AlertMessage">
+          <Name>JSON Query Failed Or Result Is Unexpected</Name>
+          <Description>
+            JSON Query failed (Critical) or completed not as expected (Warning), while querying the '{0}' web resource at the {1} address. The query failed due to {2} error kind.
+
+            Error description:
+            {3}
+
+            Response body:
+            {4}
+          </Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.JSONRequest.05.Monitor" SubElementID="OK">
+          <Name>OK</Name>
+          <Description>OK</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.JSONRequest.05.Monitor" SubElementID="WarningError">
+          <Name>WarningError</Name>
+          <Description>WarningError</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.JSONRequest.05.Monitor" SubElementID="CriticalError">
+          <Name>CriticalError</Name>
+          <Description>CriticalError</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>

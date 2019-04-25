@@ -1,0 +1,83 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="OpsLogix.IMP.Url.HTTPRequest.Monitor" Accessibility="Public" Enabled="false" Target="OpsLogix.IMP.Url.Address" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="OpsLogix.IMP.Url.HTTPRequest.UnitMonitor" ConfirmDelivery="false">
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="OpsLogix.IMP.Url.HTTPRequest.Monitor.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Property[Type="System!System.Entity"]/DisplayName$</AlertParameter1>
+            <AlertParameter2>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</AlertParameter2>
+            <AlertParameter3>$Data/Context/Property[@Name='Error']$</AlertParameter3>
+            <AlertParameter4>$Data/Context/Property[@Name='ResponseLength']$</AlertParameter4>
+            <AlertParameter5>$Data/Context/Property[@Name='Response']$</AlertParameter5>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="OK" MonitorTypeStateID="OK" HealthState="Success" />
+          <OperationalState ID="WARNING" MonitorTypeStateID="WARNING" HealthState="Warning" />
+          <OperationalState ID="ERROR" MonitorTypeStateID="ERROR" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>600</IntervalSeconds>
+          <SyncTime />
+          <URL>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</URL>
+          <Path />
+          <AllowRedirection>true</AllowRedirection>
+          <Method>GET</Method>
+          <PageExpression />
+          <Headers />
+          <AuthenticationScheme />
+          <AuthenticationUserName>$RunAs[Name="OpsLogix.IMP.Url.RequestCredentials.SecureReference"]/UserName$</AuthenticationUserName>
+          <AuthenticationPassword>$RunAs[Name="OpsLogix.IMP.Url.RequestCredentials.SecureReference"]/Password$</AuthenticationPassword>
+          <UserAgent />
+          <DNSServerList>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServers$</DNSServerList>
+          <DNSRequestTimeoutSec>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServersTimeout$</DNSRequestTimeoutSec>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <StringResources>
+      <StringResource ID="OpsLogix.IMP.Url.HTTPRequest.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="OpsLogix.IMP.Url.HTTPRequest.Monitor">
+          <Name>HTTP Query Monitor</Name>
+          <Description>Retrive resource and analyse content.</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.HTTPRequest.Monitor.AlertMessage">
+          <Name>HTTP Query Failed Or Result Is Unexpected</Name>
+          <Description>
+            HTTP Query failed (Critical) or completed not as expected (Warning), while querying the '{0}' web resource at the {1} address.
+
+            Error description:
+            {2}
+
+            Response body (total response length [{3}]):
+            {4}
+          </Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.HTTPRequest.Monitor" SubElementID="OK">
+          <Name>OK</Name>
+          <Description>OK</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.HTTPRequest.Monitor" SubElementID="WARNING">
+          <Name>WARNING</Name>
+          <Description>WARNING</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.HTTPRequest.Monitor" SubElementID="ERROR">
+          <Name>ERROR</Name>
+          <Description>ERROR</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>

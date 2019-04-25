@@ -1,0 +1,43 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType ID="OpsLogix.IMP.Url.Address" Base="System!System.Entity" Abstract="false" Accessibility="Public" Hosted="false" Singleton="false">
+          <Property ID="Address" Type="string" Key="true" />
+          <Property ID="ActingAgent" Type="string" Required="true" />
+          <Property ID="Description" Type="string" />
+          <Property ID="DNSServers" Type="string" />
+          <Property ID="DNSServersTimeout" Type="int" />
+          <Property ID="ProxyAddress" Type="string" />
+        </ClassType>
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Address">
+          <Name>URL (Unified Resource Locator)</Name>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Address" SubElementID="ActingAgent">
+          <Name>Actioning Agent</Name>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Address" SubElementID="Address">
+          <Name>Address</Name>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Address" SubElementID="Description">
+          <Name>Description</Name>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Address" SubElementID="DNSServers">
+          <Name>Custom DNS Servers</Name>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Address" SubElementID="DNSServersTimeout">
+          <Name>Custom Name Resolution Timeout</Name>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Address" SubElementID="ProxyAddress">
+          <Name>Custom Proxy Address</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

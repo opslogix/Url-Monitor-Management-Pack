@@ -1,0 +1,46 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+      <ProbeActionModuleType ID="OpsLogix.IMP.Url.JSONRequest.ProbeAction" Accessibility="Internal">
+        <Configuration>
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="RequestPath" type="xsd:string" />
+          <xsd:element minOccurs="1" name="Method" type="xsd:string" />
+          <xsd:element minOccurs="0" name="JSONBody" type="xsd:string" />
+          <xsd:element minOccurs="0" name="Headers" type="xsd:string" />
+          <xsd:element minOccurs="1" name="OKFieldName" type="xsd:string" />
+          <xsd:element minOccurs="1" name="OKFieldValue" type="xsd:string" />
+          <xsd:element minOccurs="0" name="ErrorFieldName" type="xsd:string" />
+          <xsd:element minOccurs="0" name="ErrorFieldValue" type="xsd:string" />
+          <xsd:element minOccurs="0" name="AuthenticationScheme" type="xsd:string" />
+          <xsd:element minOccurs="0" name="AuthenticationUserName" type="xsd:string" />
+          <xsd:element minOccurs="0" name="AuthenticationPassword" type="xsd:string" />
+          <xsd:element minOccurs="0" name="UserAgent" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="RequestPath" Selector="$Config/RequestPath$" ParameterType="string" />
+          <OverrideableParameter ID="Method" Selector="$Config/Method$" ParameterType="string" />
+          <OverrideableParameter ID="JSONBody" Selector="$Config/JSONBody$" ParameterType="string" />
+          <OverrideableParameter ID="Headers" Selector="$Config/Headers$" ParameterType="string" />
+          <OverrideableParameter ID="OKFieldName" Selector="$Config/OKFieldName$" ParameterType="string" />
+          <OverrideableParameter ID="OKFieldValue" Selector="$Config/OKFieldValue$" ParameterType="string" />
+          <OverrideableParameter ID="ErrorFieldName" Selector="$Config/ErrorFieldName$" ParameterType="string" />
+          <OverrideableParameter ID="ErrorFieldValue" Selector="$Config/ErrorFieldValue$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationScheme" Selector="$Config/AuthenticationScheme$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationUserName" Selector="$Config/AuthenticationUserName$" ParameterType="string" />
+          <OverrideableParameter ID="UserAgent" Selector="$Config/UserAgent$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>OpsLogix.IMP.Url.Modules.DeployableAssembly</Assembly>
+            <Type>OpsLogix.IMP.Url.Modules.JSONRequestPA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
+    </ModuleTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

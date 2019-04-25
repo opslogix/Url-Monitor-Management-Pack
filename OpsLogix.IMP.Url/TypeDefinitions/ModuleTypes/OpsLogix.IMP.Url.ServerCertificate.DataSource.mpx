@@ -1,0 +1,46 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+      <DataSourceModuleType ID="OpsLogix.IMP.Url.ServerCertificate.DataSource" Accessibility="Internal">
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="ValidateCertificate" type="xsd:boolean" />
+          <xsd:element minOccurs="1" name="DisabledHash" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="ValidateCertificate" Selector="$Config/ValidateCertificate$" ParameterType="bool" />
+          <OverrideableParameter ID="DisabledHash" Selector="$Config/DisabledHash$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="PA_GetCert" TypeID="OpsLogix.IMP.Url.ServerCertificate.ProbeAction">
+                <URL>$Config/URL$</URL>
+                <ValidateCertificate>false</ValidateCertificate>
+                <DisabledHash>$Config/DisabledHash$</DisabledHash>
+                <DNSServerList>$Config/DNSServerList$</DNSServerList>
+                <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PA_GetCert">
+                <Node ID="DS_Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+    </ModuleTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

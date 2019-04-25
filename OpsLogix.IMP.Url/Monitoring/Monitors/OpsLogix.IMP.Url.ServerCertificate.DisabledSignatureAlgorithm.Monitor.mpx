@@ -1,0 +1,71 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="OpsLogix.IMP.Url.ServerCertificate.DisabledSignatureAlgorithm.Monitor" Accessibility="Public" Enabled="true" Target="OpsLogix.IMP.Url.Address" ParentMonitorID="Health!System.Health.SecurityState" Remotable="true" Priority="Normal" TypeID="OpsLogix.IMP.Url.ServerCertificate.DisabledSignatureAlgorithm.UnitMonitor" ConfirmDelivery="false">
+        <Category>SecurityHealth</Category>
+        <AlertSettings AlertMessage="OpsLogix.IMP.Url.ServerCertificate.DisabledSignatureAlgorithm.Monitor.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Property[Type="System!System.Entity"]/DisplayName$</AlertParameter1>
+            <AlertParameter2>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</AlertParameter2>
+            <AlertParameter3>$Data/Context/Property[@Name='SignatureAlgorithm']$</AlertParameter3>
+            <AlertParameter4>$Data/Context/Property[@Name='Issuer']$</AlertParameter4>
+            <AlertParameter5>$Data/Context/Property[@Name='Subject']$</AlertParameter5>
+            <AlertParameter6>$Data/Context/Property[@Name='SerialNumber']$</AlertParameter6>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="OK" MonitorTypeStateID="OK" HealthState="Success" />
+          <OperationalState ID="Disabled" MonitorTypeStateID="Disabled" HealthState="Warning" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>7200</IntervalSeconds>
+          <SyncTime />
+          <URL>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</URL>
+          <DisabledSignatureAlgorithm>sha1RSA</DisabledSignatureAlgorithm>
+          <DNSServerList>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServers$</DNSServerList>
+          <DNSRequestTimeoutSec>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServersTimeout$</DNSRequestTimeoutSec>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <StringResources>
+      <StringResource ID="OpsLogix.IMP.Url.ServerCertificate.DisabledSignatureAlgorithm.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.DisabledSignatureAlgorithm.Monitor">
+          <Name>Server Certificate Disabled Signature Algorithm Monitor</Name>
+          <Description>Validate target's certificate signature hash.</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.DisabledSignatureAlgorithm.Monitor.AlertMessage">
+          <Name>Weak Certificate Signature Hash Algorithm</Name>
+          <Description>
+            Secure connection to the '{0}' web resource at the {1} address may be compromised, because the resource uses certificate with weak signature hash algorithm ({2}).
+
+            Certificate details:
+            Issuer: {3}
+            Subject: {4}
+            Signature algorithm: {2}
+            Serial number: {5}
+          </Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.DisabledSignatureAlgorithm.Monitor" SubElementID="OK">
+          <Name>OK</Name>
+          <Description>OK</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.DisabledSignatureAlgorithm.Monitor" SubElementID="Disabled">
+          <Name>Disabled</Name>
+          <Description>Disabled</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>

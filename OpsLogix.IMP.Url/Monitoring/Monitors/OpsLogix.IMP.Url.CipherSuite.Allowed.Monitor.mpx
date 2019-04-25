@@ -1,0 +1,62 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="OpsLogix.IMP.Url.CipherSuite.Allowed.Monitor" Accessibility="Public" Enabled="true" Target="OpsLogix.IMP.Url.Address" ParentMonitorID="Health!System.Health.SecurityState" Remotable="true" Priority="Normal" TypeID="OpsLogix.IMP.Url.CipherSuite.Allowed.UnitMonitor" ConfirmDelivery="false">
+        <Category>SecurityHealth</Category>
+        <AlertSettings AlertMessage="OpsLogix.IMP.Url.CipherSuite.Allowed.Monitor.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Property[Type="System!System.Entity"]/DisplayName$</AlertParameter1>
+            <AlertParameter2>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</AlertParameter2>
+            <AlertParameter3>$Data/Context/Property[@Name='SupportedProtocols']$</AlertParameter3>
+            <AlertParameter4>$Data/Context/Property[@Name='ListAllowed']$</AlertParameter4>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="OK" MonitorTypeStateID="OK" HealthState="Success" />
+          <OperationalState ID="SecurityRisk" MonitorTypeStateID="SecurityRisk" HealthState="Warning" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>3600</IntervalSeconds>
+          <SyncTime />
+          <URL>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</URL>
+          <CipherSuitesToTest>Ssl2;Ssl3;Tls;Tls11;Tls12</CipherSuitesToTest>
+          <AllowedCipherSuites>Tls;Tls11;Tls12</AllowedCipherSuites>
+          <DNSServerList>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServers$</DNSServerList>
+          <DNSRequestTimeoutSec>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServersTimeout$</DNSRequestTimeoutSec>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <StringResources>
+      <StringResource ID="OpsLogix.IMP.Url.CipherSuite.Allowed.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="OpsLogix.IMP.Url.CipherSuite.Allowed.Monitor">
+          <Name>Weak Security Connection Monitor</Name>
+          <Description>Alerts is target resource supports a weak security protocol.</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.CipherSuite.Allowed.Monitor.AlertMessage">
+          <Name>Connection Security Weak</Name>
+          <Description>Secure connection to the '{0}' web resource at the {1} address may be weak. The resource supports {2} protocols, while only {3} protocols are allowed.</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.CipherSuite.Allowed.Monitor" SubElementID="OK">
+          <Name>OK</Name>
+          <Description>OK</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.CipherSuite.Allowed.Monitor" SubElementID="SecurityRisk">
+          <Name>SecurityRisk</Name>
+          <Description>SecurityRisk</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>

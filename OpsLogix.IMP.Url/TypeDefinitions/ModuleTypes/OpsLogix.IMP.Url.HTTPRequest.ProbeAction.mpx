@@ -1,0 +1,40 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+      <ProbeActionModuleType ID="OpsLogix.IMP.Url.HTTPRequest.ProbeAction" Accessibility="Internal">
+        <Configuration>
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="Path" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AllowRedirection" type="xsd:boolean" />
+          <xsd:element minOccurs="1" name="Method" type="xsd:string" />
+          <xsd:element minOccurs="1" name="PageExpression" type="xsd:string" />
+          <xsd:element minOccurs="1" name="Headers" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AuthenticationScheme" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AuthenticationUserName" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AuthenticationPassword" type="xsd:string" />
+          <xsd:element minOccurs="1" name="UserAgent" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="Path" Selector="$Config/Path$" ParameterType="string" />
+          <OverrideableParameter ID="AllowRedirection" Selector="$Config/AllowRedirection$" ParameterType="bool" />
+          <OverrideableParameter ID="Method" Selector="$Config/Method$" ParameterType="string" />
+          <OverrideableParameter ID="PageExpression" Selector="$Config/PageExpression$" ParameterType="string" />
+          <OverrideableParameter ID="Headers" Selector="$Config/Headers$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationScheme" Selector="$Config/AuthenticationScheme$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationUserName" Selector="$Config/AuthenticationUserName$" ParameterType="string" />
+          <OverrideableParameter ID="UserAgent" Selector="$Config/UserAgent$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>OpsLogix.IMP.Url.Modules.DeployableAssembly</Assembly>
+            <Type>OpsLogix.IMP.Url.Modules.HTTPRequestPA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
+    </ModuleTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

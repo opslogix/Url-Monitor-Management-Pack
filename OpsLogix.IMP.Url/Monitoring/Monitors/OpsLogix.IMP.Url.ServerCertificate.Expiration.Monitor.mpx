@@ -1,0 +1,77 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="OpsLogix.IMP.Url.ServerCertificate.Expiration.Monitor" Accessibility="Public" Enabled="true" Target="OpsLogix.IMP.Url.Address" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="OpsLogix.IMP.Url.ServerCertificate.Expiration.UnitMonitor" ConfirmDelivery="false">
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="OpsLogix.IMP.Url.ServerCertificate.Expiration.Monitor.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Property[Type="System!System.Entity"]/DisplayName$</AlertParameter1>
+            <AlertParameter2>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</AlertParameter2>
+            <AlertParameter3>$Data/Context/Property[@Name='Issuer']$</AlertParameter3>
+            <AlertParameter4>$Data/Context/Property[@Name='Subject']$</AlertParameter4>
+            <AlertParameter5>$Data/Context/Property[@Name='DaysToExpire']$</AlertParameter5>
+            <AlertParameter6>$Data/Context/Property[@Name='EndDate']$</AlertParameter6>
+            <AlertParameter7>$Data/Context/Property[@Name='SerialNumber']$</AlertParameter7>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="Valid" MonitorTypeStateID="Valid" HealthState="Success" />
+          <OperationalState ID="ExpiresSoon" MonitorTypeStateID="ExpiresSoon" HealthState="Warning" />
+          <OperationalState ID="Expired" MonitorTypeStateID="Expired" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>7200</IntervalSeconds>
+          <SyncTime />
+          <URL>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</URL>
+          <DaysToWarn>30</DaysToWarn>
+          <DNSServerList>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServers$</DNSServerList>
+          <DNSRequestTimeoutSec>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServersTimeout$</DNSRequestTimeoutSec>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <StringResources>
+      <StringResource ID="OpsLogix.IMP.Url.ServerCertificate.Expiration.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.Expiration.Monitor">
+          <Name>Server Certificate Expiration Monitor</Name>
+          <Description>Test if server's certificate is expiring soon or has already expired.</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.Expiration.Monitor.AlertMessage">
+          <Name>Certificate Expires Soon or Has Already Expired</Name>
+          <Description>
+            The '{0}' web resource at the {1} address uses a certificate, which expires soon (Warning) or has already expired (Critical):
+
+            Certificate Issuer: {2}
+            Certificate Subject: {3}
+            Days To Expire (already expired if negative): {4}
+            Valid To (UTC: YYYY-MM-DD HH:MM): {5}
+            Certificate Serial Number: {6}
+          </Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.Expiration.Monitor" SubElementID="Valid">
+          <Name>Valid</Name>
+          <Description>Valid</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.Expiration.Monitor" SubElementID="ExpiresSoon">
+          <Name>ExpiresSoon</Name>
+          <Description>ExpiresSoon</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.Expiration.Monitor" SubElementID="Expired">
+          <Name>Expired</Name>
+          <Description>Expired</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>

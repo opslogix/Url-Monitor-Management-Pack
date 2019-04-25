@@ -1,0 +1,9 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Presentation>
+    <Views>
+    </Views>
+    <FolderItems>
+      <FolderItem ElementID="OpsLogix.IMP.Url.View" Folder="OpsLogix.IMP.Url.MonitoringRoot.Folder" ID="OpsLogix.IMP.Url.URL.View.FolderItem" />
+    </FolderItems>
+  </Presentation>
+</ManagementPackFragment>

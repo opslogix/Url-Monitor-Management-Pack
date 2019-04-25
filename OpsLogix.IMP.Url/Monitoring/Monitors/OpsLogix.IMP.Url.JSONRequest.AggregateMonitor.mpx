@@ -1,0 +1,20 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <AggregateMonitor ID="OpsLogix.IMP.Url.JSONRequest.AggregateMonitor" Accessibility="Public" Enabled="true" Target="OpsLogix.IMP.Url.Address" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal">
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </AggregateMonitor>
+    </Monitors>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="OpsLogix.IMP.Url.JSONRequest.AggregateMonitor">
+          <Name>JSON Query Aggregate Monitor</Name>
+          <Description>Description for new aggregate monitor.</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -58,6 +59,8 @@
     <Folder Include="Monitoring\Tasks" />
     <Folder Include="Monitoring\Rules" />
     <Folder Include="Monitoring\Overrides" />
+    <Folder Include="Presentation\FolderItems" />
+    <Folder Include="Presentation\Views" />
     <Folder Include="SigningKey" />
     <Folder Include="Presentation" />
     <Folder Include="Resources" />
@@ -65,6 +68,136 @@
     <Folder Include="TypeDefinitions\EntityTypes" />
     <Folder Include="TypeDefinitions\ModuleTypes" />
     <Folder Include="TypeDefinitions\ModuleTypes\MonitorTypes" />
+    <Folder Include="TypeDefinitions\SecureReferences" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.CipherSuite.Allowed.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.CipherSuite.Required.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.DNSNameResolution.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.HTTPRequest.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.JSONRequest.01.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.JSONRequest.02.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.JSONRequest.03.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.JSONRequest.04.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.JSONRequest.05.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.JSONRequest.AggregateMonitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.Ping.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.ServerCertificate.DisabledSignatureAlgorithm.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.ServerCertificate.Expiration.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.ServerCertificate.SSLPolicy.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\OpsLogix.IMP.Url.ServerCertificate.Validity.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\FolderItems\OpsLogix.IMP.Url.ActiveAlert.View.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\FolderItems\OpsLogix.IMP.Url.View.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\UI.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\Views\OpsLogix.IMP.Url.ActiveAlert.View.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\Views\OpsLogix.IMP.Url.View.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Resources\Assembly.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\EntityTypes\OpsLogix.IMP.Url.Address.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.CipherSuite.DataSource.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.CipherSuite.ProbeAction.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.DNSNameResolution.DataSource.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.DNSNameResolution.ProbeAction.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.HTTPRequest.DataSource.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.HTTPRequest.ProbeAction.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.JSONRequest.DataSource.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.JSONRequest.ProbeAction.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.Ping.DataSource.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.Ping.ProbeAction.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.ServerCertificate.DataSource.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\ModuleTypes\OpsLogix.IMP.Url.ServerCertificate.ProbeAction.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeDefinitions\SecureReferences\OpsLogix.IMP.Url.RequestCredentials.SecureReference.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpsLogix.IMP.Url.ConfigurationControl\OpsLogix.IMP.Url.ConfigurationControl.csproj">
+      <Name>OpsLogix.IMP.Url.ConfigurationControl</Name>
+      <Project>{300016cf-4bdc-4907-b7e6-486f43a683da}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\OpsLogix.IMP.Url.Debug.UI\OpsLogix.IMP.Url.Debug.UI.csproj">
+      <Name>OpsLogix.IMP.Url.Debug.UI</Name>
+      <Project>{a684456d-b685-48f9-8976-ff56e3919bf0}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\OpsLogix.IMP.Url.Modules\OpsLogix.IMP.Url.Modules.csproj">
+      <Name>OpsLogix.IMP.Url.Modules</Name>
+      <Project>{02c09781-3070-4399-b436-286113b1076c}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\OpsLogix.IMP.Url.Shared\OpsLogix.IMP.Url.Shared.csproj">
+      <Name>OpsLogix.IMP.Url.Shared</Name>
+      <Project>{71ee804a-8690-4b00-b76b-25fa6a704a14}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>

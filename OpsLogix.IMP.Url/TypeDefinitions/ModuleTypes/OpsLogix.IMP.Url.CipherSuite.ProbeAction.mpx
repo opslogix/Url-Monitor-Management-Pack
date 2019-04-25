@@ -1,0 +1,29 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+      <ProbeActionModuleType ID="OpsLogix.IMP.Url.CipherSuite.ProbeAction" Accessibility="Internal">
+        <Configuration>
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="CipherSuitesToTest" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AllowedCipherSuites" type="xsd:string" />
+          <xsd:element minOccurs="1" name="RequiredCipherSuites" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="CipherSuitesToTest" Selector="$Config/CipherSuitesToTest$" ParameterType="string" />
+          <OverrideableParameter ID="AllowedCipherSuites" Selector="$Config/AllowedCipherSuites$" ParameterType="string" />
+          <OverrideableParameter ID="RequiredCipherSuites" Selector="$Config/RequiredCipherSuites$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>OpsLogix.IMP.Url.Modules.DeployableAssembly</Assembly>
+            <Type>OpsLogix.IMP.Url.Modules.CipherSuitePA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
+    </ModuleTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

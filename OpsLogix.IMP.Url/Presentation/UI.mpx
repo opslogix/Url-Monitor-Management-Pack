@@ -1,0 +1,45 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Categories>
+    <Category ID="SCOMAuthoring.URL.Monitoring.ControlPanel.Category" Target="SCOMAuthoring.URL.Monitoring.Control.Assembly"
+              Value="Visualization!Microsoft.SystemCenter.Visualization.WindowsAssembly" />
+  </Categories>
+  <PresentationTypes>
+    <ViewTypes>
+      <ViewType ID="SCOMAuthoring.URL.Monitoring.ControlPanel.ViewType" Accessibility="Public">
+        <Configuration />
+        <ViewImplementation>
+          <Assembly>SCOMAuthoring.URL.Monitoring.Control.Assembly</Assembly>
+          <Type>SCOMAuthoring.URL.Monitoring.Control.ULRControlPanel</Type>
+        </ViewImplementation>
+      </ViewType>
+    </ViewTypes>
+  </PresentationTypes>
+  <Presentation>
+    <Views>
+      <View ID="SCOMAuthoring.URL.Monitoring.ControlPanel.View" Accessibility="Public" Enabled="true" Visible="true"
+            TypeID="SCOMAuthoring.URL.Monitoring.ControlPanel.ViewType" Target="SCOMAuthoring.URL.Monitoring.Address">
+        <Category>Administration</Category>
+      </View>
+    </Views>
+    <Folders>
+      <Folder ID="SCOMAuthoring.URL.Monitoring.MonitoringRoot.Folder" Accessibility="Public" 
+              ParentFolder="SC!Microsoft.SystemCenter.Monitoring.ViewFolder.Root"/>
+    </Folders>
+    <FolderItems>
+      <FolderItem ID="SCOMAuthoring.URL.Monitoring.ControlPanel.FolderItem" ElementID="SCOMAuthoring.URL.Monitoring.ControlPanel.View"
+                  Folder="SL!SCOMAuthoring.Library.Administration.Root" />
+    </FolderItems>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="SCOMAuthoring.URL.Monitoring.ControlPanel.View">
+          <Name>URL Monitoring Setup</Name>
+        </DisplayString>
+        <DisplayString ElementID="SCOMAuthoring.URL.Monitoring.MonitoringRoot.Folder">
+          <Name>URL Monitoring</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

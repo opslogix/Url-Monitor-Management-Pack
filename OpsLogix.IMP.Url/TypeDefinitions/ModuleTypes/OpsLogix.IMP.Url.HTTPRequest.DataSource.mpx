@@ -1,0 +1,66 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+      <DataSourceModuleType ID="OpsLogix.IMP.Url.HTTPRequest.DataSource" Accessibility="Internal">
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="Path" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AllowRedirection" type="xsd:boolean" />
+          <xsd:element minOccurs="1" name="Method" type="xsd:string" />
+          <xsd:element minOccurs="1" name="PageExpression" type="xsd:string" />
+          <xsd:element minOccurs="1" name="Headers" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AuthenticationScheme" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AuthenticationUserName" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AuthenticationPassword" type="xsd:string" />
+          <xsd:element minOccurs="1" name="UserAgent" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="Path" Selector="$Config/Path$" ParameterType="string" />
+          <OverrideableParameter ID="AllowRedirection" Selector="$Config/AllowRedirection$" ParameterType="bool" />
+          <OverrideableParameter ID="Method" Selector="$Config/Method$" ParameterType="string" />
+          <OverrideableParameter ID="PageExpression" Selector="$Config/PageExpression$" ParameterType="string" />
+          <OverrideableParameter ID="Headers" Selector="$Config/Headers$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationScheme" Selector="$Config/AuthenticationScheme$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationUserName" Selector="$Config/AuthenticationUserName$" ParameterType="string" />
+          <OverrideableParameter ID="UserAgent" Selector="$Config/UserAgent$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="PA_HTTPResult" TypeID="OpsLogix.IMP.Url.HTTPRequest.ProbeAction">
+                <URL>$Config/URL$</URL>
+                <Path>$Config/Path$</Path>
+                <AllowRedirection>$Config/AllowRedirection$</AllowRedirection>
+                <Method>$Config/Method$</Method>
+                <PageExpression>$Config/PageExpression$</PageExpression>
+                <Headers>$Config/Headers$</Headers>
+                <AuthenticationScheme>$Config/AuthenticationScheme$</AuthenticationScheme>
+                <AuthenticationUserName>$Config/AuthenticationUserName$</AuthenticationUserName>
+                <AuthenticationPassword>$Config/AuthenticationPassword$</AuthenticationPassword>
+                <UserAgent>$Config/UserAgent$</UserAgent>
+                <DNSServerList>$Config/DNSServerList$</DNSServerList>
+                <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PA_HTTPResult">
+                <Node ID="DS_Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+    </ModuleTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

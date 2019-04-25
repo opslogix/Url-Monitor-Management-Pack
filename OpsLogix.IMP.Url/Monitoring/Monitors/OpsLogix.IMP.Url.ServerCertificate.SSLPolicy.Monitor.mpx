@@ -1,0 +1,69 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="OpsLogix.IMP.Url.ServerCertificate.SSLPolicy.Monitor" Accessibility="Public" Enabled="true" Target="OpsLogix.IMP.Url.Address" ParentMonitorID="Health!System.Health.SecurityState" Remotable="true" Priority="Normal" TypeID="OpsLogix.IMP.Url.ServerCertificate.SSLPolicy.UnitMonitor" ConfirmDelivery="false">
+        <Category>SecurityHealth</Category>
+        <AlertSettings AlertMessage="OpsLogix.IMP.Url.ServerCertificate.SSLPolicy.Monitor.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Property[Type="System!System.Entity"]/DisplayName$</AlertParameter1>
+            <AlertParameter2>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</AlertParameter2>
+            <AlertParameter3>$Data/Context/Property[@Name='PolicyErrors']$</AlertParameter3>
+            <AlertParameter4>$Data/Context/Property[@Name='Issuer']$</AlertParameter4>
+            <AlertParameter5>$Data/Context/Property[@Name='Subject']$</AlertParameter5>
+            <AlertParameter6>$Data/Context/Property[@Name='SerialNumber']$</AlertParameter6>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="OK" MonitorTypeStateID="OK" HealthState="Success" />
+          <OperationalState ID="Error" MonitorTypeStateID="Error" HealthState="Warning" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>7200</IntervalSeconds>
+          <SyncTime />
+          <URL>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</URL>
+          <DNSServerList>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServers$</DNSServerList>
+          <DNSRequestTimeoutSec>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServersTimeout$</DNSRequestTimeoutSec>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <StringResources>
+      <StringResource ID="OpsLogix.IMP.Url.ServerCertificate.SSLPolicy.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.SSLPolicy.Monitor">
+          <Name>Server Certificate SSL Policy Monitor</Name>
+          <Description>Test certificate compliance with SSL Policy.</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.SSLPolicy.Monitor.AlertMessage">
+          <Name>Certificate Not Compliant with SSL Policy</Name>
+          <Description>
+            Secure connection to the '{0}' web resource at the {1} address may be not possible, because it's not compliant with SSL policy. Policy errors: {2}
+
+            Certificate details:
+            Issuer: {3}
+            Subject: {4}
+            Serial number: {5}
+          </Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.SSLPolicy.Monitor" SubElementID="OK">
+          <Name>OK</Name>
+          <Description>OK</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.ServerCertificate.SSLPolicy.Monitor" SubElementID="Error">
+          <Name>Error</Name>
+          <Description>Error</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>

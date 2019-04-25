@@ -1,0 +1,74 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="OpsLogix.IMP.Url.Ping.Monitor" Accessibility="Public" Enabled="true" Target="OpsLogix.IMP.Url.Address" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="OpsLogix.IMP.Url.Ping.UnitMonitor" ConfirmDelivery="false">
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="OpsLogix.IMP.Url.Ping.Monitor.AlertMessage">
+          <AlertOnState>Error</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Property[Type="System!System.Entity"]/DisplayName$</AlertParameter1>
+            <AlertParameter2>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</AlertParameter2>
+            <AlertParameter3>$Data/Context/Property[@Name='Error']$</AlertParameter3>
+            <AlertParameter4>$Data/Context/Property[@Name='Address']$</AlertParameter4>
+            <AlertParameter5>$Data/Context/Property[@Name='RoundTripTime']$</AlertParameter5>
+            <AlertParameter6>$Data/Context/Property[@Name='TimeToLive']$</AlertParameter6>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="OK" MonitorTypeStateID="OK" HealthState="Success" />
+          <OperationalState ID="ERROR" MonitorTypeStateID="ERROR" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>600</IntervalSeconds>
+          <SyncTime />
+          <URL>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/Address$</URL>
+          <BufferSize>32</BufferSize>
+          <DontFragment>false</DontFragment>
+          <MaxRTT>5000</MaxRTT>
+          <MaxTTL>128</MaxTTL>
+          <DNSServerList>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServers$</DNSServerList>
+          <DNSRequestTimeoutSec>$Target/Property[Type="OpsLogix.IMP.Url.Address"]/DNSServersTimeout$</DNSRequestTimeoutSec>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <StringResources>
+      <StringResource ID="OpsLogix.IMP.Url.Ping.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Ping.Monitor">
+          <Name>ICMP Ping Monitor</Name>
+          <Description>Echoing resource.</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Ping.Monitor.AlertMessage">
+          <Name>No Echo Response</Name>
+          <Description>
+            The '{0}' web resource at the {1} address did not response to ICMP Echo (ping) request. The resource might be not available.
+
+            Test request details:
+            Error: {2}
+            IP Address: {3}
+            Round Trip Time: {4}
+            Time to Live: {5}
+          </Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Ping.Monitor" SubElementID="OK">
+          <Name>OK</Name>
+          <Description>OK</Description>
+        </DisplayString>
+        <DisplayString ElementID="OpsLogix.IMP.Url.Ping.Monitor" SubElementID="ERROR">
+          <Name>ERROR</Name>
+          <Description>ERROR</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>
