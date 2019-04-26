@@ -13,15 +13,15 @@ namespace OpsLogix.IMP.Url.ConfigurationControl
     {
         private readonly Guid _urlMonitoringAddressClassId = new Guid("4146aafa-4d54-17cc-30cc-8b6d5ce6d392");
 
-        public UrlMonitoringConfigurationContainer(string managementGroupName = null)
+        public UrlMonitoringConfigurationContainer()
         {
             InitializeComponent();
 
             ManagementGroup managementGroup = null;
 
-            if (!string.IsNullOrEmpty(managementGroupName))
-                managementGroup = new ManagementGroup(managementGroupName);
-            else
+            //if (!string.IsNullOrEmpty(managementGroupName))
+            //    managementGroup = new ManagementGroup(managementGroupName);
+            //else
                 managementGroup = new ManagementGroup("localhost");
 
             var scomSdkService = new ScomSdkService(managementGroup);

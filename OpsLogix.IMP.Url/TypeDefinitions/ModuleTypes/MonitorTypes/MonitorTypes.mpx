@@ -1,0 +1,1191 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <MonitorTypes>
+      <UnitMonitorType ID="OpsLogix.IMP.Url.DNSNameResolution.UnitMonitor" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="Resolved" NoDetection="false"/>
+          <MonitorTypeState ID="PartiallyResolved" NoDetection="false"/>
+          <MonitorTypeState ID="NotResolved" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="MinValidResponses" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="MinValidResponses" Selector="$Config/MinValidResponses$" ParameterType="int" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_DNSNameResolution" TypeID="OpsLogix.IMP.Url.DNSNameResolution.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <URL>$Config/URL$</URL>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <MinValidResponses>$Config/MinValidResponses$</MinValidResponses>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </DataSource>
+            <ProbeAction ID="PA_DNSNameResolution" TypeID="OpsLogix.IMP.Url.DNSNameResolution.ProbeAction">
+              <URL>$Config/URL$</URL>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <MinValidResponses>$Config/MinValidResponses$</MinValidResponses>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </ProbeAction>
+            <ProbeAction ID="PA_Passthrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CA_Resolved" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CA_PartiallyResolved" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">WARNING</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CA_NotResolved" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">ERROR</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="Resolved">
+              <Node ID="CA_Resolved">
+                <Node ID="DS_DNSNameResolution" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="PartiallyResolved">
+              <Node ID="CA_PartiallyResolved">
+                <Node ID="DS_DNSNameResolution" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="NotResolved">
+              <Node ID="CA_NotResolved">
+                <Node ID="DS_DNSNameResolution" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="Resolved">
+              <Node ID="CA_Resolved">
+                <Node ID="PA_DNSNameResolution">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="PartiallyResolved">
+              <Node ID="CA_PartiallyResolved">
+                <Node ID="PA_DNSNameResolution">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="NotResolved">
+              <Node ID="CA_NotResolved">
+                <Node ID="PA_DNSNameResolution">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+      <UnitMonitorType ID="OpsLogix.IMP.Url.JSONRequest.UnitMonitor" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="OK" NoDetection="false"/>
+          <MonitorTypeState ID="WarningError" NoDetection="false" Comment="Application or Unexpected result error."/>
+          <MonitorTypeState ID="CriticalError" NoDetection="false" Comment="Sytem error, like 'cannot connect'."/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="RequestPath" type="xsd:string" />
+          <xsd:element minOccurs="1" name="Method" type="xsd:string" />
+          <xsd:element minOccurs="0" name="JSONBody" type="xsd:string" />
+          <xsd:element minOccurs="0" name="Headers" type="xsd:string" />
+          <xsd:element minOccurs="1" name="OKFieldName" type="xsd:string" />
+          <xsd:element minOccurs="1" name="OKFieldValue" type="xsd:string" />
+          <xsd:element minOccurs="0" name="ErrorFieldName" type="xsd:string" />
+          <xsd:element minOccurs="0" name="ErrorFieldValue" type="xsd:string" />
+          <xsd:element minOccurs="0" name="AuthenticationScheme" type="xsd:string" />
+          <xsd:element minOccurs="0" name="AuthenticationUserName" type="xsd:string" />
+          <xsd:element minOccurs="0" name="AuthenticationPassword" type="xsd:string" />
+          <xsd:element minOccurs="0" name="UserAgent" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="RequestPath" Selector="$Config/RequestPath$" ParameterType="string" />
+          <OverrideableParameter ID="Method" Selector="$Config/Method$" ParameterType="string" />
+          <OverrideableParameter ID="JSONBody" Selector="$Config/JSONBody$" ParameterType="string" />
+          <OverrideableParameter ID="Headers" Selector="$Config/Headers$" ParameterType="string" />
+          <OverrideableParameter ID="OKFieldName" Selector="$Config/OKFieldName$" ParameterType="string" />
+          <OverrideableParameter ID="OKFieldValue" Selector="$Config/OKFieldValue$" ParameterType="string" />
+          <OverrideableParameter ID="ErrorFieldName" Selector="$Config/ErrorFieldName$" ParameterType="string" />
+          <OverrideableParameter ID="ErrorFieldValue" Selector="$Config/ErrorFieldValue$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationScheme" Selector="$Config/AuthenticationScheme$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationUserName" Selector="$Config/AuthenticationUserName$" ParameterType="string" />
+          <OverrideableParameter ID="UserAgent" Selector="$Config/UserAgent$" ParameterType="string" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_JSONQuery" TypeID="OpsLogix.IMP.Url.JSONRequest.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <URL>$Config/URL$</URL>
+              <RequestPath>$Config/RequestPath$</RequestPath>
+              <Method>$Config/Method$</Method>
+              <JSONBody>$Config/JSONBody$</JSONBody>
+              <Headers>$Config/Headers$</Headers>
+              <OKFieldName>$Config/OKFieldName$</OKFieldName>
+              <OKFieldValue>$Config/OKFieldValue$</OKFieldValue>
+              <ErrorFieldName>$Config/ErrorFieldName$</ErrorFieldName>
+              <ErrorFieldValue>$Config/ErrorFieldValue$</ErrorFieldValue>
+              <AuthenticationScheme>$Config/AuthenticationScheme$</AuthenticationScheme>
+              <AuthenticationUserName>$Config/AuthenticationUserName$</AuthenticationUserName>
+              <AuthenticationPassword>$Config/AuthenticationPassword$</AuthenticationPassword>
+              <UserAgent>$Config/UserAgent$</UserAgent>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </DataSource>
+            <ProbeAction ID="PA_JSONQuery" TypeID="OpsLogix.IMP.Url.JSONRequest.ProbeAction">
+              <URL>$Config/URL$</URL>
+              <RequestPath>$Config/RequestPath$</RequestPath>
+              <Method>$Config/Method$</Method>
+              <JSONBody>$Config/JSONBody$</JSONBody>
+              <Headers>$Config/Headers$</Headers>
+              <OKFieldName>$Config/OKFieldName$</OKFieldName>
+              <OKFieldValue>$Config/OKFieldValue$</OKFieldValue>
+              <ErrorFieldName>$Config/ErrorFieldName$</ErrorFieldName>
+              <ErrorFieldValue>$Config/ErrorFieldValue$</ErrorFieldValue>
+              <AuthenticationScheme>$Config/AuthenticationScheme$</AuthenticationScheme>
+              <AuthenticationUserName>$Config/AuthenticationUserName$</AuthenticationUserName>
+              <AuthenticationPassword>$Config/AuthenticationPassword$</AuthenticationPassword>
+              <UserAgent>$Config/UserAgent$</UserAgent>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </ProbeAction>
+            <ProbeAction ID="PA_PassThrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_OK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_WarningError" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">ERROR</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <Or>
+                      <Expression>
+                        <SimpleExpression>
+                          <ValueExpression>
+                            <XPathQuery Type="String">Property[@Name='ErrorKind']</XPathQuery>
+                          </ValueExpression>
+                          <Operator>Equal</Operator>
+                          <ValueExpression>
+                            <Value Type="String">UNEXPECTED RESULT</Value>
+                          </ValueExpression>
+                        </SimpleExpression>
+                      </Expression>
+                      <Expression>
+                        <SimpleExpression>
+                          <ValueExpression>
+                            <XPathQuery Type="String">Property[@Name='ErrorKind']</XPathQuery>
+                          </ValueExpression>
+                          <Operator>Equal</Operator>
+                          <ValueExpression>
+                            <Value Type="String">APPLICATION</Value>
+                          </ValueExpression>
+                        </SimpleExpression>
+                      </Expression>
+                    </Or>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_CriticalError" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">ERROR</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='ErrorKind']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">SYSTEM</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="DS_JSONQuery"/>
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="WarningError">
+              <Node ID="CD_WarningError">
+                <Node ID="DS_JSONQuery"/>
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="CriticalError">
+              <Node ID="CD_CriticalError">
+                <Node ID="DS_JSONQuery"/>
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="PA_JSONQuery">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="WarningError">
+              <Node ID="CD_WarningError">
+                <Node ID="PA_JSONQuery">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="CriticalError">
+              <Node ID="CD_CriticalError">
+                <Node ID="PA_JSONQuery">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+      <UnitMonitorType ID="OpsLogix.IMP.Url.HTTPRequest.UnitMonitor" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="OK" NoDetection="false" />
+          <MonitorTypeState ID="WARNING" NoDetection="false" />
+          <MonitorTypeState ID="ERROR" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="Path" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AllowRedirection" type="xsd:boolean" />
+          <xsd:element minOccurs="1" name="Method" type="xsd:string" />
+          <xsd:element minOccurs="1" name="PageExpression" type="xsd:string" />
+          <xsd:element minOccurs="1" name="Headers" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AuthenticationScheme" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AuthenticationUserName" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AuthenticationPassword" type="xsd:string" />
+          <xsd:element minOccurs="1" name="UserAgent" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="Path" Selector="$Config/Path$" ParameterType="string" />
+          <OverrideableParameter ID="AllowRedirection" Selector="$Config/AllowRedirection$" ParameterType="bool" />
+          <OverrideableParameter ID="Method" Selector="$Config/Method$" ParameterType="string" />
+          <OverrideableParameter ID="PageExpression" Selector="$Config/PageExpression$" ParameterType="string" />
+          <OverrideableParameter ID="Headers" Selector="$Config/Headers$" ParameterType="string" />
+          <OverrideableParameter ID="AuthenticationScheme" Selector="$Config/AuthenticationScheme$" ParameterType="string" />
+          <OverrideableParameter ID="UserAgent" Selector="$Config/UserAgent$" ParameterType="string" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_HTTPProbe" TypeID="OpsLogix.IMP.Url.HTTPRequest.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <URL>$Config/URL$</URL>
+              <Path>$Config/Path$</Path>
+              <AllowRedirection>$Config/AllowRedirection$</AllowRedirection>
+              <Method>$Config/Method$</Method>
+              <PageExpression>$Config/PageExpression$</PageExpression>
+              <Headers>$Config/Headers$</Headers>
+              <AuthenticationScheme>$Config/AuthenticationScheme$</AuthenticationScheme>
+              <AuthenticationUserName>$Config/AuthenticationUserName$</AuthenticationUserName>
+              <AuthenticationPassword>$Config/AuthenticationPassword$</AuthenticationPassword>
+              <UserAgent>$Config/UserAgent$</UserAgent>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </DataSource>
+            <ProbeAction ID="PA_HTTPResult" TypeID="OpsLogix.IMP.Url.HTTPRequest.ProbeAction">
+              <URL>$Config/URL$</URL>
+              <Path>$Config/Path$</Path>
+              <AllowRedirection>$Config/AllowRedirection$</AllowRedirection>
+              <Method>$Config/Method$</Method>
+              <PageExpression>$Config/PageExpression$</PageExpression>
+              <Headers>$Config/Headers$</Headers>
+              <AuthenticationScheme>$Config/AuthenticationScheme$</AuthenticationScheme>
+              <AuthenticationUserName>$Config/AuthenticationUserName$</AuthenticationUserName>
+              <AuthenticationPassword>$Config/AuthenticationPassword$</AuthenticationPassword>
+              <UserAgent>$Config/UserAgent$</UserAgent>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </ProbeAction>
+            <ProbeAction ID="PA_PassThrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_OK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Warning" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">WARNING</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Error" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">ERROR</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="DS_HTTPProbe" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ERROR">
+              <Node ID="CD_Error">
+                <Node ID="DS_HTTPProbe" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="WARNING">
+              <Node ID="CD_Warning">
+                <Node ID="DS_HTTPProbe" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="PA_HTTPResult">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="ERROR">
+              <Node ID="CD_Error">
+                <Node ID="PA_HTTPResult">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="WARNING">
+              <Node ID="CD_Warning">
+                <Node ID="PA_HTTPResult">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+      <UnitMonitorType ID="OpsLogix.IMP.Url.CipherSuite.Allowed.UnitMonitor" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="OK" NoDetection="false" Comment="Only allowed chipers are enabled."/>
+          <MonitorTypeState ID="SecurityRisk" NoDetection="false" Comment="Some not allowed chipers are enabled."/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="CipherSuitesToTest" type="xsd:string" />
+          <xsd:element minOccurs="1" name="AllowedCipherSuites" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="CipherSuitesToTest" Selector="$Config/CipherSuitesToTest$" ParameterType="string" />
+          <OverrideableParameter ID="AllowedCipherSuites" Selector="$Config/AllowedCipherSuites$" ParameterType="string" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_TestChiper" TypeID="OpsLogix.IMP.Url.CipherSuite.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <URL>$Config/URL$</URL>
+              <CipherSuitesToTest>$Config/CipherSuitesToTest$</CipherSuitesToTest>
+              <AllowedCipherSuites>$Config/AllowedCipherSuites$</AllowedCipherSuites>
+              <RequiredCipherSuites></RequiredCipherSuites>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </DataSource>
+            <ProbeAction ID="PA_TestChiper" TypeID="OpsLogix.IMP.Url.CipherSuite.ProbeAction">
+              <URL>$Config/URL$</URL>
+              <CipherSuitesToTest>$Config/CipherSuitesToTest$</CipherSuitesToTest>
+              <AllowedCipherSuites>$Config/AllowedCipherSuites$</AllowedCipherSuites>
+              <RequiredCipherSuites></RequiredCipherSuites>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </ProbeAction>
+            <ProbeAction ID="PA_PassThrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_OK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='AState']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_SecurityRisk" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='AState']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">SecurityRisk</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="DS_TestChiper" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="SecurityRisk">
+              <Node ID="CD_SecurityRisk">
+                <Node ID="DS_TestChiper" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="PA_TestChiper">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="SecurityRisk">
+              <Node ID="CD_SecurityRisk">
+                <Node ID="PA_TestChiper">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+      <UnitMonitorType ID="OpsLogix.IMP.Url.CipherSuite.Required.UnitMonitor" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="OK" NoDetection="false" Comment="All requiered chipers are enabled."/>
+          <MonitorTypeState ID="SecurityRisk" NoDetection="false" Comment="Some required chipers are enabled."/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="CipherSuitesToTest" type="xsd:string" />
+          <xsd:element minOccurs="1" name="RequiredCipherSuites" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="CipherSuitesToTest" Selector="$Config/CipherSuitesToTest$" ParameterType="string" />
+          <OverrideableParameter ID="RequiredCipherSuites" Selector="$Config/RequiredCipherSuites$" ParameterType="string" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_TestChiper" TypeID="OpsLogix.IMP.Url.CipherSuite.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <URL>$Config/URL$</URL>
+              <CipherSuitesToTest>$Config/CipherSuitesToTest$</CipherSuitesToTest>
+              <AllowedCipherSuites></AllowedCipherSuites>
+              <RequiredCipherSuites>$Config/RequiredCipherSuites$</RequiredCipherSuites>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </DataSource>
+            <ProbeAction ID="PA_TestChiper" TypeID="OpsLogix.IMP.Url.CipherSuite.ProbeAction">
+              <URL>$Config/URL$</URL>
+              <CipherSuitesToTest>$Config/CipherSuitesToTest$</CipherSuitesToTest>
+              <AllowedCipherSuites></AllowedCipherSuites>
+              <RequiredCipherSuites>$Config/RequiredCipherSuites$</RequiredCipherSuites>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </ProbeAction>
+            <ProbeAction ID="PA_PassThrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_OK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='RState']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_SecurityRisk" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='RState']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">SecurityRisk</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="DS_TestChiper" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="SecurityRisk">
+              <Node ID="CD_SecurityRisk">
+                <Node ID="DS_TestChiper" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="PA_TestChiper">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="SecurityRisk">
+              <Node ID="CD_SecurityRisk">
+                <Node ID="PA_TestChiper">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+      <UnitMonitorType ID="OpsLogix.IMP.Url.ServerCertificate.DisabledSignatureAlgorithm.UnitMonitor" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="OK" NoDetection="false"/>
+          <MonitorTypeState ID="Disabled" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="DisabledSignatureAlgorithm" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="DisabledSignatureAlgorithm" Selector="$Config/DisabledSignatureAlgorithm$" ParameterType="string" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_GetCert" TypeID="OpsLogix.IMP.Url.ServerCertificate.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <URL>$Config/URL$</URL>
+              <ValidateCertificate>false</ValidateCertificate>
+              <DisabledHash>$Config/DisabledSignatureAlgorithm$</DisabledHash>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </DataSource>
+            <ProbeAction ID="PA_GetCert" TypeID="OpsLogix.IMP.Url.ServerCertificate.ProbeAction">
+              <URL>$Config/URL$</URL>
+              <ValidateCertificate>false</ValidateCertificate>
+              <DisabledHash>$Config/DisabledSignatureAlgorithm$</DisabledHash>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </ProbeAction>
+            <ProbeAction ID="PA_PassThrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_OK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='SignatureAlgorithmDisabled']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">false</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Disabled" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='SignatureAlgorithmDisabled']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">true</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="DS_GetCert"/>
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Disabled">
+              <Node ID="CD_Disabled">
+                <Node ID="DS_GetCert" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="PA_GetCert">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="Disabled">
+              <Node ID="CD_Disabled">
+                <Node ID="PA_GetCert">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+      <UnitMonitorType ID="OpsLogix.IMP.Url.ServerCertificate.Validity.UnitMonitor" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="Valid" NoDetection="false"/>
+          <MonitorTypeState ID="Invalid" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_GetCert" TypeID="OpsLogix.IMP.Url.ServerCertificate.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <URL>$Config/URL$</URL>
+              <ValidateCertificate>true</ValidateCertificate>
+              <DisabledHash></DisabledHash>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </DataSource>
+            <ProbeAction ID="PA_GetCert" TypeID="OpsLogix.IMP.Url.ServerCertificate.ProbeAction">
+              <URL>$Config/URL$</URL>
+              <ValidateCertificate>true</ValidateCertificate>
+              <DisabledHash></DisabledHash>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </ProbeAction>
+            <ProbeAction ID="PA_PassThrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_Valid" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='CertificateIsValid']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">true</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Invalid" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='CertificateIsValid']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">false</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="Valid">
+              <Node ID="CD_Valid">
+                <Node ID="DS_GetCert" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Invalid">
+              <Node ID="CD_Invalid">
+                <Node ID="DS_GetCert" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="Valid">
+              <Node ID="CD_Valid">
+                <Node ID="PA_GetCert">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="Invalid">
+              <Node ID="CD_Invalid">
+                <Node ID="PA_GetCert">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+      <UnitMonitorType ID="OpsLogix.IMP.Url.ServerCertificate.SSLPolicy.UnitMonitor" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="OK" NoDetection="false"/>
+          <MonitorTypeState ID="Error" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_GetCert" TypeID="OpsLogix.IMP.Url.ServerCertificate.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <URL>$Config/URL$</URL>
+              <ValidateCertificate>false</ValidateCertificate>
+              <DisabledHash></DisabledHash>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </DataSource>
+            <ProbeAction ID="PA_GetCert" TypeID="OpsLogix.IMP.Url.ServerCertificate.ProbeAction">
+              <URL>$Config/URL$</URL>
+              <ValidateCertificate>false</ValidateCertificate>
+              <DisabledHash></DisabledHash>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </ProbeAction>
+            <ProbeAction ID="PA_PassThrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_OK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='PolicyErrors']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">NONE</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Error" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='PolicyErrors']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>NotEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="String">NONE</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="DS_GetCert" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Error">
+              <Node ID="CD_Error">
+                <Node ID="DS_GetCert" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="PA_GetCert">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="Error">
+              <Node ID="CD_Error">
+                <Node ID="PA_GetCert">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+      <UnitMonitorType ID="OpsLogix.IMP.Url.ServerCertificate.Expiration.UnitMonitor" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="Valid" NoDetection="false"/>
+          <MonitorTypeState ID="ExpiresSoon" NoDetection="false"/>
+          <MonitorTypeState ID="Expired" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="1" name="DaysToWarn" type="xsd:double" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="DaysToWarn" Selector="$Config/DaysToWarn$" ParameterType="double" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_GetCert" TypeID="OpsLogix.IMP.Url.ServerCertificate.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <URL>$Config/URL$</URL>
+              <ValidateCertificate>false</ValidateCertificate>
+              <DisabledHash></DisabledHash>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </DataSource>
+            <ProbeAction ID="PA_GetCert" TypeID="OpsLogix.IMP.Url.ServerCertificate.ProbeAction">
+              <URL>$Config/URL$</URL>
+              <ValidateCertificate>false</ValidateCertificate>
+              <DisabledHash></DisabledHash>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </ProbeAction>
+            <ProbeAction ID="PA_PassThrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_Valid" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='DaysToExpire']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/DaysToWarn$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_ExpiresSoon" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='DaysToExpire']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>LessEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/DaysToWarn$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='DaysToExpire']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Greater</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">0</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Expired" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='DaysToExpire']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Less</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="Valid">
+              <Node ID="CD_Valid">
+                <Node ID="DS_GetCert" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ExpiresSoon">
+              <Node ID="CD_ExpiresSoon">
+                <Node ID="DS_GetCert" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Expired">
+              <Node ID="CD_Expired">
+                <Node ID="DS_GetCert" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="Valid">
+              <Node ID="CD_Valid">
+                <Node ID="PA_GetCert">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="ExpiresSoon">
+              <Node ID="CD_ExpiresSoon">
+                <Node ID="PA_GetCert">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="Expired">
+              <Node ID="CD_Expired">
+                <Node ID="PA_GetCert">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+      <UnitMonitorType ID="OpsLogix.IMP.Url.Ping.UnitMonitor" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="OK" NoDetection="false" />
+          <MonitorTypeState ID="ERROR" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" />
+          <xsd:element minOccurs="1" name="URL" type="xsd:string" />
+          <xsd:element minOccurs="0" name="BufferSize" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="DontFragment" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="MaxRTT" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="MaxTTL" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="DNSServerList" type="xsd:string" />
+          <xsd:element minOccurs="0" name="DNSRequestTimeoutSec" type="xsd:integer" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="BufferSize" Selector="$Config/BufferSize$" ParameterType="int" />
+          <OverrideableParameter ID="DontFragment" Selector="$Config/DontFragment$" ParameterType="bool" />
+          <OverrideableParameter ID="MaxRTT" Selector="$Config/MaxRTT$" ParameterType="int" />
+          <OverrideableParameter ID="MaxTTL" Selector="$Config/MaxTTL$" ParameterType="int" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_Ping" TypeID="OpsLogix.IMP.Url.Ping.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <URL>$Config/URL$</URL>
+              <BufferSize>$Config/BufferSize$</BufferSize>
+              <DontFragment>$Config/DontFragment$</DontFragment>
+              <MaxRTT>$Config/MaxRTT$</MaxRTT>
+              <MaxTTL>$Config/MaxTTL$</MaxTTL>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </DataSource>
+            <ProbeAction ID="PA_Ping" TypeID="OpsLogix.IMP.Url.Ping.ProbeAction">
+              <URL>$Config/URL$</URL>
+              <BufferSize>$Config/BufferSize$</BufferSize>
+              <DontFragment>$Config/DontFragment$</DontFragment>
+              <MaxRTT>$Config/MaxRTT$</MaxRTT>
+              <MaxTTL>$Config/MaxTTL$</MaxTTL>
+              <DNSServerList>$Config/DNSServerList$</DNSServerList>
+              <DNSRequestTimeoutSec>$Config/DNSRequestTimeoutSec$</DNSRequestTimeoutSec>
+            </ProbeAction>
+            <ProbeAction ID="PA_PassThrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_OK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Error" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='State']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">ERROR</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="DS_Ping" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ERROR">
+              <Node ID="CD_Error">
+                <Node ID="DS_Ping" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="PA_Ping">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="ERROR">
+              <Node ID="CD_Error">
+                <Node ID="PA_Ping">
+                  <Node ID="PA_PassThrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+    </MonitorTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

@@ -3,7 +3,7 @@
     <Views>
     </Views>
     <FolderItems>
-      <FolderItem ElementID="OpsLogix.IMP.Url.ActiveAlert.View" Folder="OpsLogix.IMP.Url.MonitoringRoot.Folder" ID="OpsLogix.IMP.Url.ActiveAlert.View.FolderItem" />
+      <FolderItem ElementID="OpsLogix.IMP.Url.ActiveAlert.View" Folder="OB!OpsLogix.BaseLibrary.ViewFolder" ID="OpsLogix.IMP.Url.ActiveAlert.View.FolderItem" />
     </FolderItems>
   </Presentation>
 </ManagementPackFragment>

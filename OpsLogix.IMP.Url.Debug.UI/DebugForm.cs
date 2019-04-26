@@ -9,7 +9,7 @@ namespace OpsLogix.IMP.Url.Debug.UI
         {
             InitializeComponent();
 
-            var urlConfiguration = new UrlMonitoringConfigurationContainer("localhost")
+            var urlConfiguration = new UrlMonitoringConfigurationContainer()
             {
                 Dock = DockStyle.Fill
             };
