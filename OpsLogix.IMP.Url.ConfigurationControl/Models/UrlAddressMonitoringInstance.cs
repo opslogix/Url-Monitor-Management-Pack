@@ -1,4 +1,5 @@
-﻿using Microsoft.EnterpriseManagement.Monitoring;
+﻿using Microsoft.EnterpriseManagement.Configuration;
+using Microsoft.EnterpriseManagement.Monitoring;
 using OpsLogix.IMP.Url.Shared;
 using OpsLogix.IMP.Url.Shared.Attributes;
 using System.ComponentModel;

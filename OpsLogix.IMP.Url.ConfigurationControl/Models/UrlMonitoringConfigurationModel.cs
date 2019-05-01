@@ -3,6 +3,7 @@ using Microsoft.EnterpriseManagement.Configuration;
 using Microsoft.EnterpriseManagement.Monitoring;
 using OpsLogix.IMP.Url.ConfigurationControl.Controls;
 using OpsLogix.IMP.Url.Shared;
+using OpsLogix.IMP.Url.Shared.Helpers;
 using OpsLogix.IMP.Url.Shared.Services;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Models
         private readonly IScomSdkService _scomSdkService;
 
         private readonly ManagementPackClass _actionPointClass;
+        private readonly ManagementPackClass _seedClass;
 
         public event EventHandler<UrlAddressInstanceEventArgs> ConfigureInstance;
         public event EventHandler<UrlAddressInstanceEventArgs> InstanceAdded;
@@ -31,8 +33,10 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Models
             if (actionPointClassId == null) throw new ArgumentNullException(nameof(actionPointClassId));
             if (urlMonitoringAddressClassId == null) throw new ArgumentNullException(nameof(urlMonitoringAddressClassId));
 
-            _urlInstanceEditor = _scomSdkService.GetInstanceEditor<UrlAddressMonitoringInstance>(urlMonitoringAddressClassId, actionPointClassId);
             _actionPointClass = _scomSdkService.ManagementGroup.EntityTypes.GetClass(actionPointClassId);
+            _seedClass = _scomSdkService.ManagementGroup.EntityTypes.GetClass(urlMonitoringAddressClassId);
+
+            _urlInstanceEditor = _scomSdkService.GetInstanceEditor<UrlAddressMonitoringInstance>(_seedClass, _actionPointClass);
         }
 
         public void AddUrlMonitoringInstance(UrlAddressMonitoringInstance instance)
@@ -103,6 +107,11 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Models
         public void ConfigureUrlMonitoringInstance(UrlAddressMonitoringInstance instance)
         {
             ConfigureInstance?.Invoke(this, new UrlAddressInstanceEventArgs(instance));
+        }
+
+        public InstanceValidationResult ValidateInstance(UrlAddressMonitoringInstance instance)
+        {
+            return instance.Validate(_seedClass, _actionPointClass);
         }
     }
 }

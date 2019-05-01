@@ -11,13 +11,15 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Presenters
     {
         private readonly IUrlMonitoringConfigurationModel _model;
         private readonly IUrlMonitoringConfigurationDialogView _view;
+
         public UrlMonitoringConfigurationDialogPresenter(IUrlMonitoringConfigurationDialogView view, IUrlMonitoringConfigurationModel model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
             _view = view ?? throw new ArgumentNullException(nameof(view));
 
-            _model.ConfigureInstance += _model_ConfigureInstance;
             _view.ActionPoints = _model.GetActionPoints().ToList();
+
+            _model.ConfigureInstance += _model_ConfigureInstance;
             _view.ConfiguredUrl += _view_ConfiguredUrl;
         }
 
@@ -39,6 +41,10 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Presenters
                 ActingAgent = _view.ActionPoint?.DisplayName,
                 ActionPoint = _view.ActionPoint
             };
+
+            var valid = _model.ValidateInstance(instance);
+            if (!valid.IsValid)
+                _view.SetErrors(valid.Errors);
 
             try
             {

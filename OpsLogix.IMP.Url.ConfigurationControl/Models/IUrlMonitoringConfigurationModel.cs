@@ -1,5 +1,6 @@
 ﻿using Microsoft.EnterpriseManagement.Monitoring;
 using OpsLogix.IMP.Url.ConfigurationControl.Controls;
+using OpsLogix.IMP.Url.Shared.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -20,5 +21,6 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Models
         IEnumerable<UrlAddressMonitoringInstance> GetUrlMonitoringInstances();
         void DeleteUrlMonitoringInstances(IEnumerable<UrlAddressMonitoringInstance> instances);
         IEnumerable<MonitoringObject> GetActionPoints();
+        InstanceValidationResult ValidateInstance(UrlAddressMonitoringInstance instance);
     }
 }

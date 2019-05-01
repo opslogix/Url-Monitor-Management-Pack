@@ -73,8 +73,6 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Controls
             set
             {
                 dlvUrls.DataSource = value;
-                //dlvUrls.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                //dlvUrls.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
         }
 

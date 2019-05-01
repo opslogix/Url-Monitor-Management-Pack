@@ -74,7 +74,6 @@
             this.dlvUrls.AllColumns.Add(this.olvcDnsServersTimeout);
             this.dlvUrls.AllColumns.Add(this.olvcConfigure);
             this.dlvUrls.AutoGenerateColumns = false;
-            this.dlvUrls.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dlvUrls.CellEditUseWholeCell = false;
             this.dlvUrls.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvcDisplayName,
