@@ -45,8 +45,8 @@
             this.tblLayout.Location = new System.Drawing.Point(0, 0);
             this.tblLayout.Name = "tblLayout";
             this.tblLayout.RowCount = 2;
-            this.tblLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.556962F));
-            this.tblLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95.44304F));
+            this.tblLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.81509F));
+            this.tblLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 84.18491F));
             this.tblLayout.Size = new System.Drawing.Size(801, 411);
             this.tblLayout.TabIndex = 0;
             // 
@@ -55,12 +55,12 @@
             this.tblLayout.SetColumnSpan(this.urlMonitoringConfigurationControl, 2);
             this.urlMonitoringConfigurationControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.urlMonitoringConfigurationControl.HelpKey = "";
-            this.urlMonitoringConfigurationControl.Location = new System.Drawing.Point(3, 21);
+            this.urlMonitoringConfigurationControl.Location = new System.Drawing.Point(3, 68);
             this.urlMonitoringConfigurationControl.ManagementGroupSession = null;
             this.urlMonitoringConfigurationControl.Name = "urlMonitoringConfigurationControl";
             this.urlMonitoringConfigurationControl.Personalization = null;
             this.urlMonitoringConfigurationControl.PersonalizationKey = "";
-            this.urlMonitoringConfigurationControl.Size = new System.Drawing.Size(795, 387);
+            this.urlMonitoringConfigurationControl.Size = new System.Drawing.Size(795, 340);
             this.urlMonitoringConfigurationControl.TabIndex = 0;
             this.urlMonitoringConfigurationControl.Target = null;
             this.urlMonitoringConfigurationControl.Urls = null;

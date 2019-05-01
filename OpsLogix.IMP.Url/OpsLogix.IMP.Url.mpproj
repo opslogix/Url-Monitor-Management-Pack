@@ -32,23 +32,23 @@
   <ItemGroup>
     <ManagementPackReference Include="Microsoft.SystemCenter.Library">
       <Alias>SC</Alias>
-      <PackageToBundle>false</PackageToBundle>
+      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="Microsoft.Windows.Library">
       <Alias>Windows</Alias>
-      <PackageToBundle>false</PackageToBundle>
+      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="System.Health.Library">
       <Alias>Health</Alias>
-      <PackageToBundle>false</PackageToBundle>
+      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="System.Library">
       <Alias>System</Alias>
-      <PackageToBundle>false</PackageToBundle>
+      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="Microsoft.SystemCenter.Visualization.Library">
       <Alias>Visualization</Alias>
-      <PackageToBundle>false</PackageToBundle>
+      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
@@ -182,21 +182,25 @@
       <Name>OpsLogix.IMP.Url.ConfigurationControl</Name>
       <Project>{300016cf-4bdc-4907-b7e6-486f43a683da}</Project>
       <Private>True</Private>
+      <PackageToBundle>True</PackageToBundle>
     </ProjectReference>
     <ProjectReference Include="..\OpsLogix.IMP.Url.Debug.UI\OpsLogix.IMP.Url.Debug.UI.csproj">
       <Name>OpsLogix.IMP.Url.Debug.UI</Name>
       <Project>{a684456d-b685-48f9-8976-ff56e3919bf0}</Project>
       <Private>True</Private>
+      <PackageToBundle>True</PackageToBundle>
     </ProjectReference>
     <ProjectReference Include="..\OpsLogix.IMP.Url.Modules\OpsLogix.IMP.Url.Modules.csproj">
       <Name>OpsLogix.IMP.Url.Modules</Name>
       <Project>{02c09781-3070-4399-b436-286113b1076c}</Project>
       <Private>True</Private>
+      <PackageToBundle>True</PackageToBundle>
     </ProjectReference>
     <ProjectReference Include="..\OpsLogix.IMP.Url.Shared\OpsLogix.IMP.Url.Shared.csproj">
       <Name>OpsLogix.IMP.Url.Shared</Name>
       <Project>{71ee804a-8690-4b00-b76b-25fa6a704a14}</Project>
       <Private>True</Private>
+      <PackageToBundle>True</PackageToBundle>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />

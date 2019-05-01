@@ -13,16 +13,17 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Views
 
         DialogResult ShowDialog();
         void Hide();
+        void SetErrors(Dictionary<string,string> errors);
 
         IEnumerable<MonitoringObject> ActionPoints { get; set; }
 
-        UrlAddressMonitoringInstance Instance { get; set; }
         string Address { get; set; }
         string Description { get; set; }
         string DisplayName { get; set; }
         string Proxy { get; set; }
         string CustomDnsServers { get; set; }
         int DnsTimeout { get; set; }
+        UrlAddressMonitoringInstance Instance { get; set; }
         MonitoringObject ActionPoint { get; set; }
     }
 }

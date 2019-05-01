@@ -23,5 +23,15 @@ namespace OpsLogix.IMP.Url.Shared.Services
         {
             return new ScomClassInstanceEditor<T>(ManagementGroup, seedClassId, actionPointClassId, monitoringConnector);
         }
+
+        public ScomClassInstanceEditor<T> GetInstanceEditor<T>(ManagementPackClass seedClass, MonitoringConnector monitoringConnector = null) where T : ScomMonitoringInstance
+        {
+            return new ScomClassInstanceEditor<T>(ManagementGroup, seedClass, monitoringConnector);
+        }
+
+        public ScomClassInstanceEditor<T> GetInstanceEditor<T>(ManagementPackClass seedClass, ManagementPackClass actionPointClass, MonitoringConnector monitoringConnector = null, ManagementPackRelationship hostingRelationship = null) where T : ScomMonitoringInstance
+        {
+            return new ScomClassInstanceEditor<T>(ManagementGroup, seedClass, actionPointClass, monitoringConnector);
+        }
     }
 }

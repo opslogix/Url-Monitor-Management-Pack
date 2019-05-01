@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+            this.components = new System.ComponentModel.Container();
             this.lblDnsServerList = new System.Windows.Forms.Label();
             this.lblQueryTimeout = new System.Windows.Forms.Label();
             this.lblProxy = new System.Windows.Forms.Label();
@@ -46,10 +47,12 @@
             this.tbAddress = new System.Windows.Forms.TextBox();
             this.gbExtraSettings = new System.Windows.Forms.GroupBox();
             this.btOk = new System.Windows.Forms.Button();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nudDNSTimeout)).BeginInit();
             this.configurationPanel.SuspendLayout();
             this.gbSettings.SuspendLayout();
             this.gbExtraSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // lblDnsServerList
@@ -159,7 +162,7 @@
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
-            this.lblDescription.Location = new System.Drawing.Point(257, 33);
+            this.lblDescription.Location = new System.Drawing.Point(254, 21);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(63, 13);
             this.lblDescription.TabIndex = 5;
@@ -183,10 +186,10 @@
             // 
             // tbDescription
             // 
-            this.tbDescription.Location = new System.Drawing.Point(257, 49);
+            this.tbDescription.Location = new System.Drawing.Point(257, 37);
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
-            this.tbDescription.Size = new System.Drawing.Size(209, 48);
+            this.tbDescription.Size = new System.Drawing.Size(209, 60);
             this.tbDescription.TabIndex = 3;
             // 
             // cmbActionPoint
@@ -220,7 +223,7 @@
             this.gbExtraSettings.Size = new System.Drawing.Size(472, 96);
             this.gbExtraSettings.TabIndex = 1;
             this.gbExtraSettings.TabStop = false;
-            this.gbExtraSettings.Text = "Advanced configuration";
+            this.gbExtraSettings.Text = "Advanced";
             // 
             // btOk
             // 
@@ -231,6 +234,10 @@
             this.btOk.Text = "Ok";
             this.btOk.UseVisualStyleBackColor = true;
             this.btOk.Click += new System.EventHandler(this.btOk_Click);
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
             // 
             // UrlMonitoringConfigurationDialogForm
             // 
@@ -248,6 +255,7 @@
             this.gbSettings.PerformLayout();
             this.gbExtraSettings.ResumeLayout(false);
             this.gbExtraSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
 
     }
@@ -272,5 +280,6 @@
         private System.Windows.Forms.TextBox tbDisplayName;
         private System.Windows.Forms.Label lblDisplayName;
         private System.Windows.Forms.Label lblActionPoint;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

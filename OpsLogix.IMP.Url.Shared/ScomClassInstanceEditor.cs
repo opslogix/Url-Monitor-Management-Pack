@@ -3,6 +3,7 @@ using Microsoft.EnterpriseManagement.Common;
 using Microsoft.EnterpriseManagement.Configuration;
 using Microsoft.EnterpriseManagement.ConnectorFramework;
 using Microsoft.EnterpriseManagement.Monitoring;
+using OpsLogix.IMP.Url.Shared.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Linq;
 namespace OpsLogix.IMP.Url.Shared
 {
     /// <summary>
-    /// 
+    /// Instance editor
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ScomClassInstanceEditor<T> where T : ScomMonitoringInstance
@@ -27,8 +28,9 @@ namespace OpsLogix.IMP.Url.Shared
         private readonly ManagementPackClass _seedClass, _actionPointClass;
         private readonly List<MonitoringObject> _actionPoints = new List<MonitoringObject>();
 
-        protected ManagementPackRelationship RelMapShouldManageEntity, RelMapManagesEntity, relHosting, relHsShouldManageEntity;
-        protected ManagementPackRelationship RelToClearMap, RelToClearHs;
+        private readonly ManagementPackRelationship _relMapShouldManageEntity, _relMapManagesEntity, _relHosting, _relHsShouldManageEntity;
+        private readonly ManagementPackRelationship _relToClearMap;
+        private readonly ManagementPackRelationship _relToClearHs;
 
         /// <summary>
         /// This constructor is for unhosted objects managed by All Management Server resource pool.
@@ -42,14 +44,13 @@ namespace OpsLogix.IMP.Url.Shared
             _seedClass = seedClass ?? throw new ArgumentNullException(nameof(seedClass));
             _monitoringConnector = monitoringConnector;
 
-            RelToClearHs = _managementGroup.EntityTypes.GetRelationshipClass(SystemMonitoringRelationship.HealthServiceShouldManageEntity);
-            RelToClearMap = _managementGroup.EntityTypes.GetRelationshipClass(_managementActionPointShouldManageEntityRelationshipId);
+            _relToClearHs = _managementGroup.EntityTypes.GetRelationshipClass(SystemMonitoringRelationship.HealthServiceShouldManageEntity);
+            _relToClearMap = _managementGroup.EntityTypes.GetRelationshipClass(_managementActionPointShouldManageEntityRelationshipId);
         }
 
         public ScomClassInstanceEditor(ManagementGroup managementGroup, Guid seedClassId,  MonitoringConnector monitoringConnector = null)
             : this(managementGroup, managementGroup.EntityTypes.GetClass(seedClassId), monitoringConnector)
         {
-            if (seedClassId == null) throw new ArgumentNullException(nameof(seedClassId));
         }
 
         /// <summary>
@@ -63,33 +64,32 @@ namespace OpsLogix.IMP.Url.Shared
         public ScomClassInstanceEditor(ManagementGroup managementGroup, ManagementPackClass seedClass, ManagementPackClass actionPointClass, MonitoringConnector monitoringConnector = null, ManagementPackRelationship hostingRelationship = null) 
             : this(managementGroup, seedClass, monitoringConnector)
         {
-            _seedClass = seedClass ?? throw new ArgumentNullException(nameof(seedClass));
             _actionPointClass = actionPointClass ?? throw new ArgumentNullException(nameof(actionPointClass));
 
             if (seedClass.Hosted)
             {
-                RelMapShouldManageEntity = null;
-                RelMapManagesEntity = null;
+                _relMapShouldManageEntity = null;
+                _relMapManagesEntity = null;
 
-                relHosting = hostingRelationship ?? managementGroup.EntityTypes.GetRelationshipClass(SystemRelationship.Hosting);
+                _relHosting = hostingRelationship ?? managementGroup.EntityTypes.GetRelationshipClass(SystemRelationship.Hosting);
             }
             else
             {
                 if (actionPointClass.IsSubtypeOf(managementGroup.EntityTypes.GetClass(_managementActionPointClassId)) || actionPointClass.Id == _managementActionPointClassId)
-                    RelMapShouldManageEntity = managementGroup.EntityTypes.GetRelationshipClass(_managementActionPointShouldManageEntityRelationshipId);
+                    _relMapShouldManageEntity = managementGroup.EntityTypes.GetRelationshipClass(_managementActionPointShouldManageEntityRelationshipId);
                 else if (actionPointClass.IsSubtypeOf(managementGroup.EntityTypes.GetClass(SystemMonitoringClass.HealthService)) || actionPointClass.Id == SystemMonitoringClass.HealthService.Id)
-                    relHsShouldManageEntity = managementGroup.EntityTypes.GetRelationshipClass(SystemMonitoringRelationship.HealthServiceShouldManageEntity);
+                    _relHsShouldManageEntity = managementGroup.EntityTypes.GetRelationshipClass(SystemMonitoringRelationship.HealthServiceShouldManageEntity);
                 else
                     throw new NotSupportedException("For unhosted scenario, action point class should be either Microsoft.SystemCenter.ManagementActionPoint or Microsoft.SystemCenter.HealthService, or inherited from these classes.");
 
-                RelMapManagesEntity = managementGroup.EntityTypes.GetRelationshipClass(_managementActionPointManagesEntityRelationshipId);
+                _relMapManagesEntity = managementGroup.EntityTypes.GetRelationshipClass(_managementActionPointManagesEntityRelationshipId);
             }
 
             _actionPoints.AddRange(managementGroup.EntityObjects.GetObjectReader<MonitoringObject>(_actionPointClass, ObjectQueryOptions.Default));
         }
 
         public ScomClassInstanceEditor(ManagementGroup managementGroup, Guid seedClassId, Guid actionPointClassId, MonitoringConnector monitoringConnector = null, ManagementPackRelationship hostingRelationship = null) 
-            : this(managementGroup, managementGroup.EntityTypes.GetClass(seedClassId), managementGroup.EntityTypes.GetClass(actionPointClassId), monitoringConnector)
+            : this(managementGroup, managementGroup.EntityTypes.GetClass(seedClassId), managementGroup.EntityTypes.GetClass(actionPointClassId), monitoringConnector, hostingRelationship)
         {
         }
 
@@ -125,9 +125,8 @@ namespace OpsLogix.IMP.Url.Shared
 
             foreach (var @object in objects)
             {
-                //Ignore
-                if (direction != ScomDiscoveryType.Delete && !HasAllRequiredProperties(@object))
-                    throw new Exception($"Invalid instance, missing required properties");
+                if(!@object.Validate(_seedClass, _actionPointClass).IsValid)
+                    throw new Exception($"Instance has invalid properties or missing required properties");
 
                 var newSeedInstance = new CreatableEnterpriseManagementObject(_managementGroup, _seedClass);
                 CreatableEnterpriseManagementRelationshipObject newSomethingShouldManageInstance = null;
@@ -158,21 +157,21 @@ namespace OpsLogix.IMP.Url.Shared
                 //Unhosted, with specific action point
                 if (!_seedClass.Hosted && _actionPointClass != null && @object.ActionPoint != null)
                 {
-                    if (RelMapShouldManageEntity != null)
+                    if (_relMapShouldManageEntity != null)
                     {
-                        newSomethingShouldManageInstance = new CreatableEnterpriseManagementRelationshipObject(_managementGroup, RelMapShouldManageEntity);
+                        newSomethingShouldManageInstance = new CreatableEnterpriseManagementRelationshipObject(_managementGroup, _relMapShouldManageEntity);
                         newSomethingShouldManageInstance.SetTarget(newSeedInstance);
                         newSomethingShouldManageInstance.SetSource(@object.ActionPoint);
                     }
 
                     // sometimes when specific Health Service is deleted, relationship may revert to All Management Server Pool
-                    if (relHsShouldManageEntity != null && !@object.ActionPoint.IsInstanceOf(_managementGroup.EntityTypes.GetClass(_managementServicePoolClassId)))
+                    if (_relHsShouldManageEntity != null && !@object.ActionPoint.IsInstanceOf(_managementGroup.EntityTypes.GetClass(_managementServicePoolClassId)))
                     {
-                        newSomethingShouldManageInstance = new CreatableEnterpriseManagementRelationshipObject(_managementGroup, relHsShouldManageEntity);
+                        newSomethingShouldManageInstance = new CreatableEnterpriseManagementRelationshipObject(_managementGroup, _relHsShouldManageEntity);
                         newSomethingShouldManageInstance.SetTarget(newSeedInstance);
                         newSomethingShouldManageInstance.SetSource(@object.ActionPoint);
                     }
-                    if (RelMapShouldManageEntity == null && relHsShouldManageEntity == null)
+                    if (_relMapShouldManageEntity == null && _relHsShouldManageEntity == null)
                         throw new NotSupportedException("Scenario not supported.");
                 }
                 // Hosted, in this case myActionPointClass is the hosing class
@@ -242,8 +241,8 @@ namespace OpsLogix.IMP.Url.Shared
 
             // Management Point
             bool commitOverwrite = false;
-            var allMAPRelations = _managementGroup.EntityObjects.GetRelationshipObjectsWhereTarget<EnterpriseManagementObject>(realSeedInstance.Id, RelToClearMap, DerivedClassTraversalDepth.Recursive, TraversalDepth.OneLevel, ObjectQueryOptions.Default).Where(x => !x.IsDeleted);
-            var allHSRelations = _managementGroup.EntityObjects.GetRelationshipObjectsWhereTarget<EnterpriseManagementObject>(realSeedInstance.Id, RelToClearHs, DerivedClassTraversalDepth.Recursive, TraversalDepth.OneLevel, ObjectQueryOptions.Default).Where(x => !x.IsDeleted);
+            var allMAPRelations = _managementGroup.EntityObjects.GetRelationshipObjectsWhereTarget<EnterpriseManagementObject>(realSeedInstance.Id, _relToClearMap, DerivedClassTraversalDepth.Recursive, TraversalDepth.OneLevel, ObjectQueryOptions.Default).Where(x => !x.IsDeleted);
+            var allHSRelations = _managementGroup.EntityObjects.GetRelationshipObjectsWhereTarget<EnterpriseManagementObject>(realSeedInstance.Id, _relToClearHs, DerivedClassTraversalDepth.Recursive, TraversalDepth.OneLevel, ObjectQueryOptions.Default).Where(x => !x.IsDeleted);
 
             foreach (var rel in allMAPRelations)
             {
@@ -266,31 +265,7 @@ namespace OpsLogix.IMP.Url.Shared
             }
 
             if (commitOverwrite)
-                removalDiscovery.Overwrite(_monitoringConnector);
-        }
-
-        private bool HasAllRequiredProperties(T record)
-        {
-            // test if all key fields have values
-            bool allKeys = true;
-            bool allRequired = true;
-
-            foreach (var classProperty in _seedClass.PropertyCollection)
-            {
-                //This wont work correctly, don't use the monitoringobject
-                object objectProperty = record[classProperty.Id];
-
-                if (classProperty.Key && objectProperty == null)
-                    allKeys = false;
-                else if (classProperty.Required && objectProperty == null)
-                    allRequired = false;
-            }
-
-            // in some cases Action Point must have value too
-            if ((_seedClass.Hosted || _actionPointClass != null) && record.ActionPoint == null)
-                allRequired = false;
-
-            return allKeys & allRequired;
+                removalDiscovery.Overwrite(_managementGroup);
         }
 
         private MonitoringObject FindActionPoint(MonitoringObject instance)
@@ -310,18 +285,18 @@ namespace OpsLogix.IMP.Url.Shared
                     result = _actionPoints.Where(x => x.Name == instance.Path).FirstOrDefault();
                 if (result != null)
                     return result;
-                else if (relHosting != null)
+                else if (_relHosting != null)
                     // backup way if myActionPointClass defined incorrectly
-                    return _managementGroup.EntityObjects.GetRelationshipObjectsWhereTarget<MonitoringObject>(instance.Id, relHosting, DerivedClassTraversalDepth.Recursive, TraversalDepth.OneLevel, ObjectQueryOptions.Default).Where(x => !x.IsDeleted).FirstOrDefault().SourceObject;
+                    return _managementGroup.EntityObjects.GetRelationshipObjectsWhereTarget<MonitoringObject>(instance.Id, _relHosting, DerivedClassTraversalDepth.Recursive, TraversalDepth.OneLevel, ObjectQueryOptions.Default).Where(x => !x.IsDeleted).FirstOrDefault().SourceObject;
                 else
                     return result;
             }
             else
             {
-                if (RelMapManagesEntity == null && relHsShouldManageEntity == null)
+                if (_relMapManagesEntity == null && _relHsShouldManageEntity == null)
                     return null; // don't try to find Action Point for truly unhosted class
-                var allMAPs = instance.ManagementGroup.EntityObjects.GetRelationshipObjectsWhereTarget<MonitoringObject>(instance.Id,
-                RelMapManagesEntity, DerivedClassTraversalDepth.Recursive, TraversalDepth.OneLevel, ObjectQueryOptions.Default).Where(x => !x.IsDeleted);
+
+                var allMAPs = instance.ManagementGroup.EntityObjects.GetRelationshipObjectsWhereTarget<MonitoringObject>(instance.Id,_relMapManagesEntity, DerivedClassTraversalDepth.Recursive, TraversalDepth.OneLevel, ObjectQueryOptions.Default).Where(x => !x.IsDeleted);
                 if (allMAPs.Count() == 1)
                 {
                     var draftResult = allMAPs.First().SourceObject;

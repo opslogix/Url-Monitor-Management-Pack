@@ -46,6 +46,20 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Controls
             }
         }
 
+        public void SetErrors(Dictionary<string,string> errors)
+        {
+            errorProvider.Clear();
+
+            foreach(var error in errors)
+            {
+                var control = Controls.Find(error.Key, true).FirstOrDefault();
+                if (control == null)
+                    continue;
+
+                errorProvider.SetError(control, error.Value);
+            }
+        }
+
         public UrlMonitoringConfigurationDialogForm()
         {
             InitializeComponent();

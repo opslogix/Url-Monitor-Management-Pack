@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\ScomClassPropertyAttribute.cs" />
+    <Compile Include="Helpers\InstanceValidator.cs" />
     <Compile Include="Helpers\TcpHelper.cs" />
     <Compile Include="ModuleBaseExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
