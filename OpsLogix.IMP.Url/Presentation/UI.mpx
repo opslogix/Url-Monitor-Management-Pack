@@ -2,8 +2,6 @@
   <Categories>
     <Category ID="OpsLogix.IMP.Url.ConfigurationControl.Category" Target="OpsLogix.IMP.Url.ConfigurationControl.Assembly"
               Value="Visualization!Microsoft.SystemCenter.Visualization.WindowsAssembly" />
-    
-    
    <!--<Category ID="SCOMAuthoring.URL.Monitoring.ControlPanel.Category" Target="SCOMAuthoring.URL.Monitoring.Control.Assembly"
               Value="Visualization!Microsoft.SystemCenter.Visualization.WindowsAssembly" />-->
   </Categories>

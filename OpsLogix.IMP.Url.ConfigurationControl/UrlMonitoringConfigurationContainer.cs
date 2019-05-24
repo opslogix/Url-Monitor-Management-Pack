@@ -17,14 +17,7 @@ namespace OpsLogix.IMP.Url.ConfigurationControl
         {
             InitializeComponent();
 
-            ManagementGroup managementGroup = null;
-
-            //if (!string.IsNullOrEmpty(managementGroupName))
-            //    managementGroup = new ManagementGroup(managementGroupName);
-            //else
-                managementGroup = new ManagementGroup("localhost");
-
-            var scomSdkService = new ScomSdkService(managementGroup);
+            var scomSdkService = new ScomSdkService(base.ManagementGroup);
             var urlConfigurationModel = new UrlMonitoringConfigurationModel(scomSdkService, _urlMonitoringAddressClassId, SystemMonitoringClass.HealthService.Id);
 
             new UrlMonitoringConfigurationPresenter(urlMonitoringConfigurationControl, urlConfigurationModel);
