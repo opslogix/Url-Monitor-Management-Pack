@@ -227,13 +227,6 @@
       <Private>True</Private>
       <PackageToBundle>True</PackageToBundle>
     </Reference>
-    <Reference Include="SCOMAuthoring.URL.Monitoring.Control, Version=1.0.0.8, Culture=neutral, PublicKeyToken=4dc461a297d0c0c3">
-      <Name>SCOMAuthoring.URL.Monitoring.Control</Name>
-      <AssemblyName>SCOMAuthoring.URL.Monitoring.Control.dll</AssemblyName>
-      <HintPath>..\OpsLogix.IMP.Url.ConfigurationControl\bin\Debug\SCOMAuthoring.URL.Monitoring.Control.dll</HintPath>
-      <Private>True</Private>
-      <PackageToBundle>True</PackageToBundle>
-    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>
