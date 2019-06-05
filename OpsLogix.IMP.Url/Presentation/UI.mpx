@@ -31,7 +31,7 @@
     </Views>
     <Folders>
       <Folder ID="OpsLogix.IMP.Url.MonitoringRoot.Folder" Accessibility="Public" 
-              ParentFolder="SC!Microsoft.SystemCenter.Monitoring.ViewFolder.Root"/>
+              ParentFolder="OB!OpsLogix.BaseLibrary.ViewFolder"/>
     </Folders>
     <FolderItems>
       <FolderItem ID="OpsLogix.IMP.Url.ControlPanel.FolderItem" ElementID="OpsLogix.IMP.Url.ControlPanel.View"
@@ -42,7 +42,7 @@
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
         <DisplayString ElementID="OpsLogix.IMP.Url.ControlPanel.View">
-          <Name>URL Monitoring Setup</Name>
+          <Name>URL Monitoring MP Configuration</Name>
         </DisplayString>
         <DisplayString ElementID="OpsLogix.IMP.Url.MonitoringRoot.Folder">
           <Name>URL Monitoring</Name>

@@ -11,7 +11,7 @@ namespace OpsLogix.IMP.Url.ConfigurationControl
 {
     public partial class UrlMonitoringConfigurationContainer : MomViewBase
     {
-        private readonly Guid _urlMonitoringAddressClassId = new Guid("4146aafa-4d54-17cc-30cc-8b6d5ce6d392");
+        private readonly Guid _urlMonitoringAddressClassId = new Guid("7072898d-75b3-9a8b-20ed-404021f93c60");
 
         public UrlMonitoringConfigurationContainer()
         {
@@ -22,9 +22,9 @@ namespace OpsLogix.IMP.Url.ConfigurationControl
             //if (!string.IsNullOrEmpty(managementGroupName))
             //    managementGroup = new ManagementGroup(managementGroupName);
             //else
-                managementGroup = new ManagementGroup("localhost");
+                //managementGroup = new ManagementGroup("localhost");
 
-            var scomSdkService = new ScomSdkService(managementGroup);
+            var scomSdkService = new ScomSdkService(base.ManagementGroup);
             var urlConfigurationModel = new UrlMonitoringConfigurationModel(scomSdkService, _urlMonitoringAddressClassId, SystemMonitoringClass.HealthService.Id);
 
             new UrlMonitoringConfigurationPresenter(urlMonitoringConfigurationControl, urlConfigurationModel);
