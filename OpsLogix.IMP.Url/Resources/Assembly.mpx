@@ -1,14 +1,24 @@
 ﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Resources>
-    <Assembly ID="OpsLogix.IMP.Url.ConfigurationControl.Assembly" Accessibility="Public" QualifiedName="OpsLogix.IMP.Url.ConfigurationControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" FileName="OpsLogix.IMP.Url.ConfigurationControl.dll" HasNullStream="false" >
-      <Dependency ID="ObjectListView.Assembly" />
-      <Dependency ID="Newtonsoft.Json.DeployableAssembly" />
+    <Assembly ID="OpsLogix.IMP.Url.Shared.Assembly" Accessibility="Public"
+              QualifiedName="OpsLogix.IMP.Url.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+              FileName="OpsLogix.IMP.Url.Shared.dll" HasNullStream="false"/>
+    <Assembly ID="ObjectListView.Assembly" Accessibility="Public"
+              QualifiedName="ObjectListView, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+              FileName="ObjectListView.dll" HasNullStream="false" />
+    <Assembly ID="OpsLogix.IMP.Url.ConfigurationControl.Assembly" Accessibility="Public"
+              QualifiedName="OpsLogix.IMP.Url.ConfigurationControl, Version=1.0.0.1, Culture=neutral, PublicKeyToken=null"
+              FileName="OpsLogix.IMP.Url.ConfigurationControl.dll" HasNullStream="false" >
+      <Dependency ID="ObjectListView.Assembly"/>
+      <Dependency ID="OpsLogix.IMP.Url.Shared.Assembly" />
     </Assembly>
-    
-    <DeployableAssembly ID="ObjectListView.DeployableAssembly" Accessibility="Public" QualifiedName="ObjectListView, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" FileName="ObjectListView.dll" HasNullStream="false" />
-    <DeployableAssembly ID="OpsLogix.IMP.Url.Shared.DeployableAssembly" Accessibility="Public" QualifiedName="OpsLogix.IMP.Url.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" FileName="OpsLogix.IMP.Url.Shared.dll" HasNullStream="false"/>
-    <DeployableAssembly ID="Newtonsoft.Json.DeployableAssembly" Accessibility="Public"  QualifiedName="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed" FileName="Newtonsoft.Json.dll" HasNullStream="false"/>
-    <DeployableAssembly ID="OpsLogix.IMP.Url.Modules.DeployableAssembly" Accessibility="Public" QualifiedName="OpsLogix.IMP.Url.Modules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" FileName="OpsLogix.IMP.Url.Modules.dll" HasNullStream="false">
+
+    <DeployableAssembly ID="OpsLogix.IMP.Url.Shared.DeployableAssembly" Accessibility="Public"
+                        QualifiedName="OpsLogix.IMP.Url.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" FileName="OpsLogix.IMP.Url.Shared.dll" HasNullStream="false"/>
+    <DeployableAssembly ID="Newtonsoft.Json.DeployableAssembly" Accessibility="Public"
+                        QualifiedName="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed" FileName="Newtonsoft.Json.dll" HasNullStream="false"/>
+    <DeployableAssembly ID="OpsLogix.IMP.Url.Modules.DeployableAssembly" Accessibility="Public"
+                        QualifiedName="OpsLogix.IMP.Url.Modules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" FileName="OpsLogix.IMP.Url.Modules.dll" HasNullStream="false">
       <Dependency ID="Newtonsoft.Json.DeployableAssembly"/>
     </DeployableAssembly>
   </Resources>

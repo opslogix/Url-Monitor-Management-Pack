@@ -16,3 +16,4 @@
 /OpsLogix.IMP.Url.Shared/bin/Debug
 /.vs/
 /packages
+*.csproj.user

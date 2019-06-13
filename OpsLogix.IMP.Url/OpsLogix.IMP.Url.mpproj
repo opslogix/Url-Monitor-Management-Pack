@@ -39,10 +39,9 @@
       <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="OpsLogix.BaseLibrary">
-      <HintPath>C:\Data\MP_references\OpsLogix.BaseLibrary.mp</HintPath>
+      <HintPath>C:\Users\MVolkov\source\repos\Url-Monitor-Management-Pack\Assemblies\OpsLogix.BaseLibrary.mp</HintPath>
       <Alias>OB</Alias>
       <MinVersion>1.0.0.40</MinVersion>
-      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="System.Health.Library">
       <Alias>Health</Alias>
@@ -190,12 +189,6 @@
     <ProjectReference Include="..\OpsLogix.IMP.Url.ConfigurationControl\OpsLogix.IMP.Url.ConfigurationControl.csproj">
       <Name>OpsLogix.IMP.Url.ConfigurationControl</Name>
       <Project>{300016cf-4bdc-4907-b7e6-486f43a683da}</Project>
-      <Private>True</Private>
-      <PackageToBundle>True</PackageToBundle>
-    </ProjectReference>
-    <ProjectReference Include="..\OpsLogix.IMP.Url.Debug.UI\OpsLogix.IMP.Url.Debug.UI.csproj">
-      <Name>OpsLogix.IMP.Url.Debug.UI</Name>
-      <Project>{a684456d-b685-48f9-8976-ff56e3919bf0}</Project>
       <Private>True</Private>
       <PackageToBundle>True</PackageToBundle>
     </ProjectReference>

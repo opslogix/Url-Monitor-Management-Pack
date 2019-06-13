@@ -2,9 +2,9 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <DeploymentNextVersion>1.0.0.47</DeploymentNextVersion>
-    <DeploymentServerName>tstezalert01.contoso.com</DeploymentServerName>
-    <DeploymentCredentials>UseCurrentCredentials</DeploymentCredentials>
-    <DeploymentCookie>5248609161451147904</DeploymentCookie>
+    <DeploymentServerName>172.16.10.127</DeploymentServerName>
+    <DeploymentCredentials>AskForCredentials</DeploymentCredentials>
+    <DeploymentCookie>5248639391086897904</DeploymentCookie>
     <DeploymentAutoIncrementVersion>True</DeploymentAutoIncrementVersion>
     <DeploymentStartAction>DeployOnly</DeploymentStartAction>
     <DeploymentWebConsoleUrl />
