@@ -16,8 +16,6 @@ namespace OpsLogix.IMP.Url.ConfigurationControl
     public UrlMonitoringConfigurationContainer()
     {
       InitializeComponent();
-
-      
     }
 
     protected override void OnLoad(EventArgs e)
