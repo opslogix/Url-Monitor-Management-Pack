@@ -1,5 +1,4 @@
-﻿using Microsoft.EnterpriseManagement.Configuration;
-using Microsoft.EnterpriseManagement.Monitoring;
+﻿using Microsoft.EnterpriseManagement.Monitoring;
 using OpsLogix.IMP.Url.Shared;
 using OpsLogix.IMP.Url.Shared.Attributes;
 using System.ComponentModel;
@@ -15,15 +14,15 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Models
         private string _displayName { get; set; }
         [ScomClassProperty("97847f46-5997-9716-22c1-69b38c5ec2c9")]
         private string _address { get; set; }
-        [ScomClassProperty("2bb68b9e-7472-efa9-9729-3f9270092b68")]
+        [ScomClassProperty("1e274158-73c3-27ff-3ccd-4d73150124a0")]
         private string _description { get; set; }
-        [ScomClassProperty("4b8e04d3-d6c3-7590-cab3-2beb96948671")]
+        [ScomClassProperty("c385c626-b034-43a4-4cc5-8b84a617658b")]
         private string _actingAgent { get; set; }
-        [ScomClassProperty("d824d222-3199-d368-8251-fad79082238f")]
+        [ScomClassProperty("fc50a8e2-6c9f-9f21-53bf-80448f06006c")]
         private string _dnsServers { get; set; }
-        [ScomClassProperty("7a7f0211-9138-582b-9325-731a47103dd3")]
+        [ScomClassProperty("391bc527-7c78-3dca-4c2e-61605e4c3073")]
         private int _dnsServersTimeout { get; set; } = 15;
-        [ScomClassProperty("4677b553-210c-b3d0-ce1d-fd3a9b72d4dd")]
+        [ScomClassProperty("b0707798-7df1-612f-9303-6e90ad9b0272")]
         private string _proxyAddress { get; set; }
 
         public UrlAddressMonitoringInstance(MonitoringObject monitoringObject = null, MonitoringObject actionPoint = null) : base(monitoringObject, actionPoint) { }

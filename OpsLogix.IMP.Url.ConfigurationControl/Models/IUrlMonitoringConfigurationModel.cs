@@ -14,7 +14,6 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Models
         event EventHandler<UrlAddressInstanceEventArgs> InstanceUpdated;
 
         void ConfigureUrlMonitoringInstance(UrlAddressMonitoringInstance instance = null);
-
         void AddUrlMonitoringInstance(UrlAddressMonitoringInstance instance);
         void UpdateUrlMonitoringInstance(UrlAddressMonitoringInstance instances);
 

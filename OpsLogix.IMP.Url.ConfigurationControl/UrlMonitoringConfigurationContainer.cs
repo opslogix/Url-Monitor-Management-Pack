@@ -6,22 +6,36 @@ using OpsLogix.IMP.Url.ConfigurationControl.Models;
 using OpsLogix.IMP.Url.ConfigurationControl.Presenters;
 using OpsLogix.IMP.Url.Shared.Services;
 using System;
+using System.Diagnostics;
 
 namespace OpsLogix.IMP.Url.ConfigurationControl
 {
     public partial class UrlMonitoringConfigurationContainer : MomViewBase
     {
-        private readonly Guid _urlMonitoringAddressClassId = new Guid("4146aafa-4d54-17cc-30cc-8b6d5ce6d392");
+        private readonly Guid _urlMonitoringAddressClassId = new Guid("7072898d-75b3-9a8b-20ed-404021f93c60");
 
         public UrlMonitoringConfigurationContainer()
         {
             InitializeComponent();
+        }
 
-            var scomSdkService = new ScomSdkService(base.ManagementGroup);
+        protected override void OnLoad(EventArgs e)
+        {
+            IScomSdkService scomSdkService = null;
+
+            if (base.ManagementGroup != null)
+                scomSdkService = new ScomSdkService(base.ManagementGroup);
+            else if (Debugger.IsAttached)
+                scomSdkService = new ScomSdkService(new ManagementGroup("tstscom2019.contoso.com"));
+            else
+                scomSdkService = new ScomSdkService(new ManagementGroup("localhost"));
+
             var urlConfigurationModel = new UrlMonitoringConfigurationModel(scomSdkService, _urlMonitoringAddressClassId, SystemMonitoringClass.HealthService.Id);
 
             new UrlMonitoringConfigurationPresenter(urlMonitoringConfigurationControl, urlConfigurationModel);
             new UrlMonitoringConfigurationDialogPresenter(new UrlMonitoringConfigurationDialogForm(), urlConfigurationModel);
+
+            base.OnLoad(e);
         }
     }
 }

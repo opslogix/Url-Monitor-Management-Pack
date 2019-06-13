@@ -42,12 +42,16 @@ namespace OpsLogix.IMP.Url.ConfigurationControl.Presenters
                 ActionPoint = _view.ActionPoint
             };
 
-            var valid = _model.ValidateInstance(instance);
-            if (!valid.IsValid)
-                _view.SetErrors(valid.Errors);
 
             try
             {
+                var valid = _model.ValidateInstance(instance);
+                if (!valid.IsValid)
+                {
+                    _view.SetErrors(valid.Errors);
+                    return;
+                }
+
                 //Update or create instance
                 if (string.IsNullOrEmpty(_view.Instance.Address))
                     _model.AddUrlMonitoringInstance(instance);
